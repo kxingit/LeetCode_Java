@@ -37,3 +37,25 @@ public class Solution {
 	return -1;
   }
 }
+
+
+// v3
+public class Solution {
+  public int strStr(String s, String t) {
+	if(t.length() == 0) return 0;
+	for(int i = 0; i < s.length(); i++) {
+	  if(i + t.length() > s.length()) {
+		return -1;
+	  }
+	  for(int j = 0; j < t.length(); j++) {
+		if(s.charAt(i + j) != t.charAt(j)) {
+		  break;
+		}
+		if(j == t.length() - 1) {
+		  return i;
+		}
+	  }
+	}
+	return -1;
+  }
+}
