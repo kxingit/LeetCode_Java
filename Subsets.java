@@ -40,3 +40,23 @@ public class Solution {
 	}
   }
 }
+
+// v3
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        // 11:19 - 11:23
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> solution = new ArrayList<Integer>();
+        getSub(nums, 0, solution, result);
+        return result;
+    }
+    private void getSub(int[] nums, int start, List<Integer> solution, List<List<Integer>> result) {
+        result.add(new ArrayList<Integer>(solution));
+        for(int i = start; i < nums.length; i++) {
+            solution.add(nums[i]);
+            getSub(nums, i + 1, solution, result);
+            solution.remove(solution.size() - 1);
+        }
+    }
+}
+
