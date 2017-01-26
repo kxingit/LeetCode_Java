@@ -29,3 +29,18 @@ public class Solution {
 	return newhead;
   }
 }
+
+// v3
+public class Solution {
+  public ListNode reverseList(ListNode head) {
+	// 9:51 - 9:53
+	ListNode newhead = null;
+	while(head != null) { // java judge
+	  ListNode temp = head.next;
+	  head.next = newhead;
+	  newhead = head;
+	  head = temp;
+	}
+	return newhead;
+  }
+}
