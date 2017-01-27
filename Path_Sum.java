@@ -9,3 +9,17 @@ public class Solution {
         return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 }
+
+// v2
+public class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        // 9:09 - 9:12
+        if(root == null) return false;
+        if(root.left == null && root.right == null) {
+            if(root.val == sum) {
+                return true;
+            }
+        }
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+}
