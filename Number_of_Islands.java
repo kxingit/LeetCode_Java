@@ -144,3 +144,33 @@ public class Solution {
         }
     }
 }
+
+
+// v5
+public class Solution {
+    private int m, n;
+    public int numIslands(char[][] grid) {
+        // 3:44 - 3:56
+        m = grid.length;
+        if(m == 0) return 0;
+        n = grid[0].length;
+        int result = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(grid[i][j] != '1') continue;
+                markIsland(grid, i, j);
+                result++;
+            }
+        }
+        return result;
+    }
+    private void markIsland(char[][] grid, int i, int j) {
+        if(i == -1 || j == -1 || i == m || j == n) return;
+        if(grid[i][j] != '1') return;
+        grid[i][j] = '3';
+        markIsland(grid, i - 1, j);
+        markIsland(grid, i + 1, j);
+        markIsland(grid, i, j - 1);
+        markIsland(grid, i, j + 1);
+    }
+}

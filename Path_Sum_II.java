@@ -73,3 +73,52 @@ public class Solution {
         solution.remove(solution.size() - 1);
     }
 }
+
+
+// v4
+public class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        // 4:26
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> solution = new ArrayList<Integer>();
+        int curr = 0;
+        dfs(root, sum, curr, solution, result);
+        return result;
+    }
+    private void dfs(TreeNode root, int sum, int curr, List<Integer> solution, List<List<Integer>> result) {
+        if(root == null) return;
+        curr += root.val;
+        solution.add(root.val);
+        if(root.left == null && root.right == null) {
+            if(curr == sum) result.add(new ArrayList<Integer>(solution));
+        }
+        dfs(root.left, sum, curr, solution, result);
+        dfs(root.right, sum, curr, solution, result);
+        solution.remove(solution.size() - 1);
+    }
+}
+
+
+// v5
+public class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        // 4:26 - 4:44
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> solution = new ArrayList<Integer>();
+        int curr = 0;
+        dfs(root, sum, curr, solution, result);
+        return result;
+    }
+    private void dfs(TreeNode root, int sum, int curr, List<Integer> solution, List<List<Integer>> result) {
+        if(root == null) return;
+        curr += root.val;
+        solution.add(root.val);
+        if(root.left == null && root.right == null) {
+            if(curr == sum) result.add(new ArrayList<Integer>(solution));
+            // return; // no return!! need to resume state!!
+        }
+        dfs(root.left, sum, curr, solution, result);
+        dfs(root.right, sum, curr, solution, result);
+        solution.remove(solution.size() - 1);
+    }
+}

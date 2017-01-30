@@ -40,3 +40,40 @@ public class Solution {
 	preorder(root.right, result);
   }
 }
+
+
+// v3 iteratively
+public class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // 12:58 - 1:01
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        List<Integer> result = new ArrayList<Integer>();
+        if(root == null) return result;
+        stack.push(root);
+        while(!stack.empty()) {
+            TreeNode node = stack.pop();
+            result.add(node.val);
+            if(node.right != null) stack.push(node.right);
+            if(node.left != null) stack.push(node.left);
+        }
+        return result;
+    }
+}
+
+
+// v4
+public class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // 1:58 - 2:02
+        List<Integer> result = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        if(root != null) stack.push(root);
+        while(!stack.empty()) {
+            TreeNode curr = stack.pop();
+            result.add(curr.val);
+            if(curr.right != null) stack.push(curr.right);
+            if(curr.left != null) stack.push(curr.left);
+        }
+        return result;
+    }
+}

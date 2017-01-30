@@ -85,3 +85,24 @@ public class Solution {
 	return null;
   }
 }
+
+
+// v5
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        // 3:25 - 3:30
+        ListNode fast = head, slow = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) { // has cycle
+                while(true) {
+                    if(slow == head) return head;
+                    slow = slow.next;
+                    head = head.next;
+                }
+            }
+        }
+        return null;
+    }
+}

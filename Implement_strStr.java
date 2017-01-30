@@ -78,3 +78,22 @@ public class Solution {
 	return -1;
   }
 }
+
+
+// v5
+public class Solution {
+    public int strStr(String s, String t) {
+        // 9:31 - 9:34
+        int m = s.length(), n = t.length();
+        if(n == 0) return 0;
+        for(int i = 0; i <= m - n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(s.charAt(i + j) != t.charAt(j)) {
+                    break;
+                }
+                if(j == n - 1) return i;
+            }
+        }
+        return -1;
+    }
+}

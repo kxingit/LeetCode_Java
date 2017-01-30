@@ -71,3 +71,25 @@ public class Solution {
         dfs(root.right, solution, result);
     }
 }
+
+// v4
+public class Solution {
+    TreeNode rt;
+    public List<String> binaryTreePaths(TreeNode root) {
+        rt = root;
+        List<String> result = new ArrayList<String>();
+        String solution = "";
+        dfs(root, solution, result);
+        return result;
+    }
+    private void dfs(TreeNode root, String solution, List<String> result) {
+        if(root == null) return;
+        if(root != rt) solution += "->";
+        solution += Integer.toString(root.val);
+        if(root.left == null && root.right == null) {
+            result.add(solution);
+        }
+        dfs(root.left, solution, result);
+        dfs(root.right, solution, result);
+    }
+}
