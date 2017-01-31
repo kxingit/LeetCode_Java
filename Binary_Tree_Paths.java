@@ -93,3 +93,27 @@ public class Solution {
         dfs(root.right, solution, result);
     }
 }
+
+
+// v5
+public class Solution {
+    private TreeNode rt;
+    public List<String> binaryTreePaths(TreeNode root) {
+        // 12:24 - 12:28
+        rt = root;
+        List<String> result = new ArrayList<String>();
+        String solution = "";
+        dfs(root, solution, result);
+        return result;
+    }
+    private void dfs(TreeNode root, String solution, List<String> result) {
+        if(root == null) return;
+        if(root != rt) solution += "->";
+        solution += root.val;
+        if(root.left == null && root.right == null) {
+            result.add(solution);
+        }
+        dfs(root.left, solution, result);
+        dfs(root.right, solution, result);
+    }
+}
