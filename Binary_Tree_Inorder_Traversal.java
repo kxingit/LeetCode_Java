@@ -42,3 +42,44 @@ public class Solution {
         return result;
     }
 }
+
+// v3
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        // 9:25 - 9:28
+        List<Integer> result = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        if(root == null) return result;
+        while(root != null || !stack.empty()) {
+            while(root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            result.add(root.val);
+            root = root.right;
+        }
+        return result;
+    }
+}
+
+
+// v4
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        // 10:22 - 10:24
+        List<Integer> result = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        while(root != null || !stack.empty()) {
+            if(root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                result.add(root.val);
+                root = root.right;
+            }
+        }
+        return result;
+    }
+}

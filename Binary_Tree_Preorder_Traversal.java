@@ -77,3 +77,42 @@ public class Solution {
         return result;
     }
 }
+
+
+// v5
+public class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // 9:21 - 9:24
+        List<Integer> result = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        if(root == null) return result;
+        stack.push(root);
+        while(!stack.empty()) {
+            root = stack.pop();
+            result.add(root.val);
+            if(root.right != null) stack.push(root.right);
+            if(root.left != null) stack.push(root.left);
+        }
+        return result;
+    }
+}
+
+// v6 
+public class Solution {
+	public List<Integer> preorderTraversal(TreeNode root) {
+		// 10:58 - 11:01
+		List<Integer> result = new ArrayList<Integer>();
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		while(root != null || !stack.empty()) {
+			if(root !=null) {
+				stack.push(root);
+				result.add(root.val);
+				root = root.left;
+			} else {
+				root = stack.pop();
+				root = root.right;
+			}
+		}
+		return result;
+	}
+}

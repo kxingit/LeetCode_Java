@@ -85,3 +85,29 @@ public class Solution {
 		return getPath(root).maxPath;
 	}
 }
+
+
+// v4
+public class Solution {
+    private class ResultType {
+        int singlePath, maxPath;
+        ResultType(int s, int m) {
+            this.singlePath = s;
+            this.maxPath = m;
+        }
+    }
+    public int maxPathSum(TreeNode root) {
+        // 8:45 - 8:56
+        return getMax(root).maxPath;
+    }
+    private ResultType getMax(TreeNode root) {
+        if(root == null) {
+            return new ResultType(0, Integer.MIN_VALUE);
+        }
+        ResultType left = getMax(root.left);
+        ResultType right = getMax(root.right);
+        int singlePath = Math.max(0, root.val + Math.max(left.singlePath, right.singlePath));
+        int maxPath = Math.max(Math.max(root.val + left.singlePath + right.singlePath, left.maxPath), right.maxPath);
+        return new ResultType(singlePath, maxPath);
+    }
+}
