@@ -44,3 +44,29 @@ public class Solution {
         return result;
     }
 }
+
+// v3 Time Limit Exceeded 115 / 126 test cases passed.
+public class Solution {
+    private class ResultType {
+        int singlePath, pathSum;
+        ResultType(int s, int p) {
+            this.singlePath = s;
+            this.pathSum = p;
+        }
+    }
+    public int pathSum(TreeNode root, int sum) {
+        return getSum(root, sum).pathSum;
+    }
+    private ResultType getSum(TreeNode root, int sum) {
+        if(root == null) {
+            return new ResultType(0, 0);
+        }
+        int singlePath = 0;
+        if(root.val == sum) singlePath++;
+        ResultType left = getSum(root.left, sum - root.val);
+        ResultType right = getSum(root.right, sum - root.val);
+        singlePath = singlePath + left.singlePath + right.singlePath;
+        int pathSum = singlePath + getSum(root.left, sum).pathSum + getSum(root.right, sum).pathSum;
+        return new ResultType(singlePath, pathSum);
+    }
+}

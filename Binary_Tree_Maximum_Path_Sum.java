@@ -111,3 +111,23 @@ public class Solution {
         return new ResultType(singlePath, maxPath);
     }
 }
+
+// v5  Time Limit Exceeded 91 / 92 test cases passed.
+public class Solution {
+    public int maxPathSum(TreeNode root) {
+        // 5:36
+        int result = Integer.MIN_VALUE;
+        if(root == null) return result;
+        result = Math.max(result, root.val + singlePath(root.left) + singlePath(root.right));
+        result = Math.max(result, maxPathSum(root.left));
+        result = Math.max(result, maxPathSum(root.right));
+        return result;
+    }
+    private int singlePath(TreeNode root) {
+        if(root == null) return 0;
+        int res = 0;
+        res = Math.max(res, root.val + singlePath(root.left));
+        res = Math.max(res, root.val + singlePath(root.right));
+        return res;
+    }
+}
