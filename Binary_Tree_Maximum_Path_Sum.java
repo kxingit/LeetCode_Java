@@ -160,3 +160,38 @@ public class Solution {
         return new ResultType(singleSum, maxSum);
     }
 }
+
+
+// v7
+public class Solution {
+    // 11:58 - 12:25
+    public class RetType {
+        int singleMax;
+        int pathMax;
+        RetType(int s, int p) {
+            this.singleMax = s;
+            this.pathMax = p;
+        }
+    }
+    public int maxPathSum(TreeNode root) {
+        return getMax(root).pathMax;
+    }
+    private RetType getMax(TreeNode root) {
+        if(root == null) {
+            return new RetType(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        }
+        RetType left = getMax(root.left);
+        RetType right = getMax(root.right);
+        
+        int single = root.val;
+        if(left.singleMax > 0) single = Math.max(single, root.val + left.singleMax); // overflow
+        if(right.singleMax > 0) single = Math.max(single, root.val + right.singleMax);
+        
+        int path = root.val;
+        if(left.singleMax > 0) path += left.singleMax;
+        if(right.singleMax > 0) path += right.singleMax;
+        path = Math.max(path, left.pathMax);
+        path = Math.max(path, right.pathMax);
+        return new RetType(single, path);
+    }
+}

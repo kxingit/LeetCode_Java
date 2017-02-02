@@ -115,3 +115,34 @@ public class MedianFinder {
         }
     }
 }
+
+
+// v5
+public class MedianFinder {
+ 
+    /** initialize your data structure here. */
+    // 9:27 - 9:32
+    PriorityQueue<Integer> maxheap, minheap;
+    public MedianFinder() {
+        maxheap = new PriorityQueue<Integer>(Collections.reverseOrder());
+        minheap = new PriorityQueue<Integer>();
+    }
+    
+    public void addNum(int num) {
+        maxheap.offer(num);
+        minheap.offer(maxheap.poll());
+        if(maxheap.size() < minheap.size()) {
+            maxheap.offer(minheap.poll());
+        }
+    }
+    
+    public double findMedian() {
+        if(maxheap.size() > minheap.size()) {
+            return maxheap.peek();
+        } else {
+            return 0.5 * (maxheap.peek() + minheap.peek());
+        }
+    }
+}
+
+
