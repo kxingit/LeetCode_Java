@@ -70,3 +70,20 @@ public class Solution {
         return new ResultType(singlePath, pathSum);
     }
 }
+
+// v4
+public class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        // 9:56 - 9:59
+        if(root == null) return 0;
+        return singleSum(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    }
+    private int singleSum(TreeNode root, int sum) {
+        if(root == null) return 0;
+        int result = 0;
+        if(root.val == sum) result++;
+        result += singleSum(root.left, sum - root.val);
+        result += singleSum(root.right, sum - root.val);
+        return result;
+    }
+}

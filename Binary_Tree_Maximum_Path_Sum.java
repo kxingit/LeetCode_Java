@@ -131,3 +131,32 @@ public class Solution {
         return res;
     }
 }
+
+// v6
+public class Solution {
+    private class ResultType {
+        int singleSum, maxSum;
+        ResultType(int s, int m) {
+            this.singleSum = s;
+            this.maxSum = m;
+        }
+    }
+    public int maxPathSum(TreeNode root) {
+        // 11:13 - 11:21
+        return getSum(root).maxSum;
+    }
+    private ResultType getSum(TreeNode root) {
+        int singleSum = 0, maxSum = Integer.MIN_VALUE;
+        if(root == null) {
+            return new ResultType(singleSum, maxSum);
+        }
+        ResultType left = getSum(root.left);
+        ResultType right = getSum(root.right);
+ 
+        singleSum = Math.max(singleSum, root.val + left.singleSum);
+        singleSum = Math.max(singleSum, root.val + right.singleSum);
+        maxSum = Math.max(root.val + left.singleSum + right.singleSum, left.maxSum);
+        maxSum = Math.max(maxSum, right.maxSum);
+        return new ResultType(singleSum, maxSum);
+    }
+}
