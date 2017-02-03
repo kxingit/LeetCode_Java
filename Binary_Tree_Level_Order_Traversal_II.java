@@ -22,3 +22,26 @@ public class Solution {
         return result;
     }
 }
+
+// v2 Final
+public class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        // 10:40 - 10:43
+        List<List<Integer>> result = new ArrayList();
+        if(root == null) return result;
+        Queue<TreeNode> q = new LinkedList();
+        q.add(root);
+        while(!q.isEmpty()) {
+            int n = q.size();
+            List<Integer> level = new ArrayList();
+            for(int i = 0; i < n; i++) {
+                TreeNode node = q.poll();
+                level.add(node.val);
+                if(node.left != null) q.add(node.left);
+                if(node.right != null) q.add(node.right);
+            }
+            result.add(0, level);
+        }
+        return result;
+    }
+}

@@ -195,3 +195,88 @@ public class Solution {
         return new RetType(single, path);
     }
 }
+
+// v8 Time Limit Exceeded 92 / 92 test cases passed.
+public class Solution {
+    public int maxPathSum(TreeNode root) {
+        // 9:40 - 9:50
+        if(root == null) return Integer.MIN_VALUE;
+        int res = root.val;
+        int sl = singleMax(root.left), sr = singleMax(root.right);
+        if(sl > 0) res += sl;
+        if(sr > 0) res += sr;
+        return Math.max(res, Math.max(maxPathSum(root.left), maxPathSum(root.right)));
+    }
+    private int singleMax(TreeNode root) { // private??
+        if(root == null) return 0;
+        int res = root.val;
+        res = Math.max(res, root.val + singleMax(root.left));
+        res = Math.max(res, root.val + singleMax(root.right));
+        return res;
+    }
+}
+
+
+// v9
+public class Solution {
+    // 9:52 - 10:13
+    public class RtType {
+        int singleMax, pathMax;
+        RtType(int s, int p) {
+            this.singleMax = s;
+            this.pathMax = p;
+        }
+    }
+    public int maxPathSum(TreeNode root) {
+        return getMax(root).pathMax;
+    }
+    private RtType getMax(TreeNode root) {
+        if(root == null) return new RtType(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        RtType left = getMax(root.left);
+        RtType right = getMax(root.right);
+        
+        int single = root.val;
+        single = root.val + Math.max(0, Math.max(left.singleMax, right.singleMax));
+        
+        int path = root.val;
+        if(left.singleMax > 0) path += left.singleMax;
+        if(right.singleMax > 0) path += right.singleMax;
+        path = Math.max(path, Math.max(left.pathMax, right.pathMax));
+        
+        return new RtType(single, path);
+    }
+}
+
+
+// v10 Final Version
+public class Solution {
+    class RtType {
+        int single, path;
+        RtType(int s, int p) {
+            this.single = s;
+            this.path = p;
+        }
+    }
+    public int maxPathSum(TreeNode root) {
+        // 10:16 - 10:21
+        return getMax(root).path;
+    }
+    public RtType getMax(TreeNode root) {
+        int single = Integer.MIN_VALUE, path = Integer.MIN_VALUE;
+        if(root == null) return new RtType(single, path);
+        
+        RtType left = getMax(root.left);
+        RtType right = getMax(root.right);
+        
+        single = root.val;
+        single += Math.max(0, Math.max(left.single, right.single));
+        
+        path = root.val;
+        if(left.single > 0) path += left.single;
+        if(right.single > 0) path += right.single;
+        path = Math.max(path, Math.max(left.path, right.path));
+        
+        return new RtType(single, path);
+    }
+}
+

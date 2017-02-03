@@ -88,7 +88,7 @@ public class Solution {
     }
 }
 
-// v5: Namge correction
+// v5: Name correction
 public class Solution {
     public int pathSum(TreeNode root, int sum) {
         // 1:38 - 1:42
@@ -96,6 +96,23 @@ public class Solution {
         return rootSum(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
     }
     private int rootSum(TreeNode root, int sum) {
+        if(root == null) return 0;
+        int res = 0;
+        if(root.val == sum) res++;
+        res += rootSum(root.left, sum - root.val);
+        res += rootSum(root.right, sum - root.val);
+        return res;
+    }
+}
+
+// v6 Final
+public class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        // 11:09 - 11:12
+        if(root == null) return 0;
+        return rootSum(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    }
+    public int rootSum(TreeNode root, int sum) {
         if(root == null) return 0;
         int res = 0;
         if(root.val == sum) res++;
