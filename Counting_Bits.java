@@ -29,3 +29,21 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int[] countBits(int num) {
+        // 3:03 - 3:06
+        int[] result = new int[num + 1];
+        for(int i = 0 ; i <= num; i++) {
+            int curr = i, curr1s = 0;
+            while(curr > 0) {
+                int lastBit = curr & 1;
+                curr = curr >> 1;
+                if(lastBit == 1) curr1s++;
+            }
+            result[i] = curr1s;
+        }
+        return result;
+    }
+}

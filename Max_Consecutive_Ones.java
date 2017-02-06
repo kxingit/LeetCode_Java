@@ -31,3 +31,21 @@ public class Solution {
         return result;
     }
 }
+
+
+// v3
+public class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        // 1:33 - 1:35
+        int res = 0, currmax = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] == 1) {
+                currmax++;
+                res = Math.max(res, currmax);
+            } else {
+                currmax = 0;
+            }
+        }
+        return res;
+    }
+}

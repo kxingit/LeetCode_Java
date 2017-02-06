@@ -28,3 +28,31 @@ public class Solution {
         return result;
     }
 }
+
+// v2 C++
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        // 3:15
+        vector<vector<int>> result;
+        if(!root) return result;
+        queue<TreeNode*> q;
+        q.push(root);
+        int nlevel = 0;
+        while(!q.empty()) {
+            int n = q.size();
+            vector<int> level;
+            for(int i = 0; i < n; i++) {
+                TreeNode* node = q.front();
+                q.pop();
+                if(nlevel % 2) level.insert(level.begin(), node->val);
+                else level.push_back(node->val);
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+            }
+            nlevel++;
+            result.push_back(level);
+        }
+        return result;
+    }
+};

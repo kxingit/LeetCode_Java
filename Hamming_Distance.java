@@ -15,3 +15,17 @@ public class Solution {
     }
 }
 
+
+// v2
+public class Solution {
+    public int hammingDistance(int x, int y) {
+        int temp = x ^ y;
+        int res = 0;
+        while(temp > 0) {
+            int lastBit = temp % 2;
+            temp = temp >> 1;
+            if(lastBit == 1) res++;
+        }
+        return res;
+    }
+}

@@ -280,3 +280,35 @@ public class Solution {
     }
 }
 
+// v11
+public class Solution {
+    class ResultType {
+        int rootMax, max;
+        ResultType(int rm, int m) {
+            rootMax = rm;
+            max = m;
+        }
+    }
+    public int maxPathSum(TreeNode root) {
+        // 4:00 - 4:06
+        return getMax(root).max;
+    }
+    private ResultType getMax(TreeNode root) {
+        if(root == null) {
+            return new ResultType(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        }
+        
+        ResultType left = getMax(root.left);
+        ResultType right = getMax(root.right);
+        
+        int rootMax = root.val;
+        rootMax += Math.max(0, Math.max(left.rootMax, right.rootMax));
+        
+        int max = root.val;
+        if(left.rootMax > 0) max += left.rootMax;
+        if(right.rootMax > 0) max += right.rootMax;
+        max = Math.max(max, Math.max(left.max, right.max));
+        
+        return new ResultType(rootMax, max);
+    }
+}
