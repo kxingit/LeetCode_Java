@@ -19,3 +19,12 @@ public class Solution {
         return num & mask;
     }
 }
+
+// v3
+public class Solution {
+    public int findComplement(int num) {
+        // 10:19 - 10:20
+        int mask = Integer.highestOneBit(num) - 1;
+        return (~num) & mask;
+    }
+}

@@ -19,3 +19,20 @@ public class Solution {
         return res + duration;
     }
 }
+
+
+// v2
+public class Solution {
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        int res = 0;
+        if(timeSeries.length == 0) return 0;
+        for(int i = 1; i < timeSeries.length; i++) {
+            if(timeSeries[i] - timeSeries[i - 1] < duration) {
+                res += timeSeries[i] - timeSeries[i - 1];
+            } else {
+                res += duration;
+            }
+        }
+        return res + duration;
+    }
+}

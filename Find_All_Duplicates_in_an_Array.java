@@ -51,3 +51,25 @@ public class Solution {
         return result;
     }
 }
+
+
+// v4
+public class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        // 10:59
+        for(int i = 0; i < nums.length; i++) {
+            while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) {
+                int tmp = nums[i];
+                nums[i] = nums[nums[i] - 1];
+                nums[tmp - 1] = tmp;
+            }
+        }
+        List<Integer> res = new ArrayList();
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] != i + 1) {
+                res.add(nums[i]);
+            }
+        }
+        return res;
+    }
+}

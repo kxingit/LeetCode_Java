@@ -47,3 +47,22 @@ public class Solution {
         return result;
     }
 }
+
+// v4
+public class Solution {
+    public int[] countBits(int num) {
+        // 11:24 - 11:27
+        int[] res = new int[num + 1];
+        for(int i = 0; i <= num; i++) {
+            int tmp = i, curr = 0;
+            while(tmp > 0) {
+                if((tmp & 1) == 1) {
+                    curr++;
+                }
+                tmp = tmp >> 1;
+            }
+            res[i] = curr;
+        }
+        return res;
+    }
+}
