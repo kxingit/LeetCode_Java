@@ -69,3 +69,34 @@ public class TwoSum {
         return false;
     }
 }
+
+
+// v3
+public class TwoSum {
+ 
+    /** Initialize your data structure here. */
+    // 12:21 - 12:31
+    private HashMap<Integer, Integer> map;
+    public TwoSum() {
+        map = new HashMap();
+    }
+    
+    /** Add the number to an internal data structure.. */
+    public void add(int number) {
+        map.put(number, map.getOrDefault(number, 0) + 1);
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    public boolean find(int value) {
+        for(Integer i : map.keySet()) {
+            int other = value - i;
+            if(map.containsKey(other)) {
+                if(i == other) {
+                    if(map.get(i) == 1) continue;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+}

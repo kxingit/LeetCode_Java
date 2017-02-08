@@ -73,3 +73,43 @@ public class Solution {
         return res;
     }
 }
+
+// v5
+public class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        // 9:33 - 9:42
+        List<Integer> result = new ArrayList();
+        for(int i = 0; i < nums.length; i++) {
+            int idx = Math.abs(nums[i]) - 1;
+            if(nums[idx] > 0) {
+                nums[idx] = -nums[idx];
+            }
+            else {
+                result.add(idx + 1);
+            }
+        }
+        return result;
+    }
+}
+
+
+// v6
+public class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        // 9:45 - 9:49
+        List<Integer> result = new ArrayList();
+        for(int i = 0; i < nums.length; i++) {
+            while(nums[i] != i + 1 && nums[i] != nums[nums[i] - 1]) {
+                int tmp = nums[i];
+                nums[i] = nums[nums[i] - 1];
+                nums[tmp - 1] = tmp;
+            }
+        }
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] != i + 1) {
+                result.add(nums[i]);
+            }
+        }
+        return result;
+    }
+}

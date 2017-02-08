@@ -28,3 +28,18 @@ public class Solution {
         return (~num) & mask;
     }
 }
+
+// v4
+public class Solution {
+    public int findComplement(int num) {
+        // 10:29 -10:49
+        int i = 1;
+        while((i << 1) > 0) {
+            i = i << 1;
+        }
+        while((i & num) == 0) {
+            i = i >> 1;
+        }
+        return (~num) & (i - 1);
+    }
+}

@@ -52,3 +52,25 @@ public class Solution {
         return uglys[n - 1];
     }
 }
+
+
+// v3
+public class Solution {
+    public int nthUglyNumber(int n) {
+        // 11:56 - 12:00
+        int a = 0, b = 0, c = 0;
+        List<Integer> ugly = new ArrayList();
+        ugly.add(1);
+        for(int i = 0; i < n - 1; i++) { // !!!
+            int m2 = ugly.get(a) * 2;
+            int m3 = ugly.get(b) * 3;
+            int m5 = ugly.get(c) * 5;
+            int min = Math.min(Math.min(m2, m3), m5);
+            ugly.add(min);
+            if(min == m2) a++;
+            if(min == m3) b++;
+            if(min == m5) c++;
+        }
+        return ugly.get(ugly.size() - 1);
+    }
+}

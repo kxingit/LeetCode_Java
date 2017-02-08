@@ -26,3 +26,29 @@ public class Solution {
         return result;
     }
 }
+
+
+// v2
+public class Solution {
+    public int[] singleNumber(int[] nums) {
+        // 11:46 - 11:50
+        int xor = 0;
+        for(int i = 0; i < nums.length; i++) {
+            xor ^= nums[i];
+        }
+        int key = 1;
+        while((key & xor) == 0) {
+            key = key << 1;
+        }
+        int[] res = new int[2];
+        res[0] = 0; res[1] = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if((key & nums[i]) == 0) {
+                res[0] ^= nums[i];
+            } else {
+                res[1] ^= nums[i];
+            }
+        }
+        return res;
+    }
+}

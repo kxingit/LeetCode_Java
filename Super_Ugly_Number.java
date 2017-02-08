@@ -26,4 +26,27 @@ public class Solution {
     }
 }
 
-
+// v2
+public class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        // 12:09 - 12:19
+        int np = primes.length;
+        int[] p = new int[np];
+        int[] cand = new int[np];
+        Arrays.fill(p, 0);
+        List<Integer> ugly = new ArrayList();
+        ugly.add(1);
+        while(ugly.size() < n) {
+            int min = Integer.MAX_VALUE;
+            for(int i = 0; i < np; i++) {
+                cand[i] = ugly.get(p[i]) * primes[i];
+                min = Math.min(min, cand[i]);
+            }
+            ugly.add(min);
+            for(int i = 0; i < np; i++) {
+                if(min == cand[i]) p[i]++;
+            }
+        }
+        return ugly.get(ugly.size() - 1);
+    }
+}
