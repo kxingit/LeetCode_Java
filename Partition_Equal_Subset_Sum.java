@@ -48,3 +48,47 @@ public class Solution {
         return dp[target];
     }
 }
+
+// v3
+public class Solution {
+    public boolean canPartition(int[] nums) {
+        // 12:44 - 12:58
+        int sum = 0;
+        int n = nums.length;
+        for(int i = 0; i < n; i++) {
+            sum += nums[i];
+        }
+        if(sum % 2 == 1) return false;
+        sum /= 2;
+        
+        boolean[] dp = new boolean[sum + 1];
+        dp[0] = true;
+        for(int i = 0; i < n; i++) {
+            for(int j = sum; j >= nums[i]; j--) {
+                dp[j] = dp[j] || dp[j - nums[i]];
+            }
+        }
+        return dp[sum];
+    }
+}
+
+// v4
+public class Solution {
+    public boolean canPartition(int[] nums) {
+        // 2:15 - 2:23
+        int sum = 0, n = nums.length;
+        if(n == 0) return false;
+        for(int i = 0; i < n; i++) sum += nums[i];
+        if(sum % 2 == 1) return false;
+        sum /= 2;
+        
+        boolean [] dp = new boolean[sum + 1];
+        dp[0] = true;
+        for(int i = 0; i < n; i++) {
+            for(int j = sum; j >= nums[i]; j--) {
+                dp[j] |= dp[j - nums[i]];
+            }
+        }
+        return dp[sum];
+    }
+}

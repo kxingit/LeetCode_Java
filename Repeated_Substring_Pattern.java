@@ -44,3 +44,40 @@ public class Solution {
         return true;
     }
 }
+
+// v3 Time Limit Exceeded: 50 / 107 test cases passed.
+public class Solution {
+    public boolean repeatedSubstringPattern(String str) {
+        int len = str.length();
+        for(int i = 1; i <= str.length() / 2; i++) {
+            if(len % i != 0) continue;
+            int n = len / i;
+            String substr = str.substring(0, i);
+            String s = "";
+            for(int j = 0; j < n; j++) {
+                s += substr;
+            }
+            if(s.equals(str)) return true;
+        }
+        return false;
+    }
+}
+
+// v4
+public class Solution {
+    public boolean repeatedSubstringPattern(String str) {
+        // 3:46 - 3:48
+        int len = str.length();
+        for(int ilen = 1; ilen <= len / 2; ilen++) {
+            if(len % ilen != 0) continue;
+            int n = len / ilen;
+            String substring = str.substring(0, ilen);
+            StringBuffer sb = new StringBuffer();
+            for(int j = 0; j < n; j++) {
+                sb.append(substring);
+            }
+            if(sb.toString().equals(str)) return true;
+        }
+        return false;
+    }
+}
