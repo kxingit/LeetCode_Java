@@ -124,3 +124,19 @@ public class Solution {
         return result;
     }
 }
+
+// v7
+public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        // 10:54 - 10:56
+        List<Integer> res = new ArrayList();
+        for(int i = 0; i <= rowIndex; i++) res.add(1);
+        
+        for(int i = 0; i <= rowIndex; i++) {
+            for(int j = i - 1; j >= 1; j--) {
+                res.set(j, res.get(j) + res.get(j - 1));
+            }
+        }
+        return res;
+    }
+}

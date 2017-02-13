@@ -92,3 +92,24 @@ public class Solution {
         return dp[sum];
     }
 }
+
+
+// v5
+public class Solution {
+    public boolean canPartition(int[] nums) {
+        // 10:38 - 10:46
+        int sum = 0, n = nums.length;
+        for(int i = 0; i < n; i++) sum += nums[i];
+        if(sum % 2 == 1) return false;
+        sum /= 2;
+        
+        boolean[] dp = new boolean[sum + 1];
+        dp[0] = true;
+        for(int i = 1; i < n; i++) {
+            for(int j = sum; j >= nums[i]; j--) {
+                dp[j] |= dp[j - nums[i]];
+            }
+        }
+        return dp[sum];
+    }
+}
