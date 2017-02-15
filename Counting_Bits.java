@@ -66,3 +66,20 @@ public class Solution {
         return res;
     }
 }
+
+// v5: DP
+public class Solution {
+    public int[] countBits(int num) {
+        // 11:16 - 11:18
+        int[] res = new int[num + 1];
+        res[0] = 0;
+        for(int i = 1; i <= num; i++) {
+            if((i & 1) == 0) {
+                res[i] = res[i >> 1];
+            } else {
+                res[i] = res[i >> 1] + 1;
+            }
+        }
+        return res;
+    }
+}

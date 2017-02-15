@@ -61,3 +61,17 @@ public class Solution {
         return start * start == num || end * end == num;
     }
 }
+
+// v5
+public class Solution {
+    public boolean isPerfectSquare(int num) {
+        // 10:12 - 10:18
+        int i = 1;
+        long i2 = 1;
+        while((long) i * i <= num) { // prevent overflow!!
+            if((long) i * i == num) return true;
+            i++;
+        }
+        return false;
+    }
+}

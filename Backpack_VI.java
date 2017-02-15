@@ -58,3 +58,45 @@ public class Solution {
         return dp[m];
     }
 }
+
+// v2
+public class Solution {
+    public int backPackVI(int[] nums, int target) {
+        int n = target;
+        int[] dp = new int[n + 1]; // number of combinations to form "n"
+        dp[0] = 1;
+        for(int i = 1; i <= n; i++) {
+            for(int j = 0; j < nums.length; j++) {
+                if(i >= nums[j]) {
+                    dp[i] += dp[i - nums[j]];
+                } else {
+                    dp[i] += 0;
+                }
+            }
+        }
+        return dp[n];
+    }
+}
+
+
+// v3
+public class Solution {
+    public int backPackVI(int[] nums, int target) {
+        // 9:25 - 9:29
+        int n = nums.length;
+        int m = target;
+        int[] dp = new int[m + 1]; // number of combinations to form 'm'
+        dp[0] = 1;
+        
+        for(int i = 1; i <= m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(i < nums[j]) {
+                    dp[i] += 0;
+                } else {
+                    dp[i] += dp[i - nums[j]];
+                }
+            }
+        }
+        return dp[m];
+    }
+}

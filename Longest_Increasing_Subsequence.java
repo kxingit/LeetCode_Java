@@ -113,3 +113,25 @@ public class Solution {
         return res;
     }
 }
+
+// v6
+public class Solution {
+    public int lengthOfLIS(int[] nums) {
+        // 9:32 - 9:41
+        int n = nums.length;
+        if(n == 0) return 0;
+        int[] dp = new int[n]; // length of the longest subseq from the first 'n' elements
+        Arrays.fill(dp, 1);
+        int res = 1;
+        
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if(nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+}
