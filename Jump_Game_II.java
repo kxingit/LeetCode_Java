@@ -78,3 +78,20 @@ public class Solution {
         else return step;
     }
 }
+
+// v4
+public class Solution {
+    public int jump(int[] nums) {
+        int currmax = 0, n = nums.length, steps = 0, lastmax = currmax;
+        for(int i = 0; i < n && i <= currmax; i++) {
+            if(i > lastmax) {
+                steps++;
+                lastmax = currmax;
+                if(currmax >= n - 1) break;
+            }             
+            currmax = Math.max(currmax, i + nums[i]);           
+        }
+        if(currmax >= n - 1) return steps;
+        return 0;
+    }
+}

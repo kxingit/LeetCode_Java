@@ -40,3 +40,118 @@ public class Solution {
         return true;
     }
 }
+
+// Memorizing DFS Time Limite Exceeded, too many isPal() recursion when false
+public class Solution {
+    public int minCut(String s) {
+        // Memorizing DFS
+        int n = s.length();
+        int[] dp = new int[n];
+        Arrays.fill(dp, n);
+        dp[0] = 0;
+        boolean[][] dppal = new boolean[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(isPal(s, j, i, dppal)) {
+                    if(j == 0) {
+                        dp[i] = 0;
+                        continue;
+                    }
+                    dp[i] = Math.min(dp[i], dp[j - 1] + 1);
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+    private boolean isPal(String s, int i, int j, boolean[][] dppal) {
+        if(dppal[i][j]) return true;
+        if(i == j || i + 1 == j) return s.charAt(i) == s.charAt(j);
+        if(s.charAt(i) == s.charAt(j) && isPal(s, i + 1, j - 1, dppal)) return true;
+        return false;
+    }
+}
+
+// v3: Memorizing DFS
+public class Solution {
+    public int minCut(String s) {
+        // Memorizing DFS
+        int n = s.length();
+        int[] dp = new int[n];
+        Arrays.fill(dp, n);
+        dp[0] = 0;
+        int[][] dppal = new int[n][n]; // 0 not calculated; 1 is pal; 2 not pal
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(isPal(s, j, i, dppal) == 1) {
+                    if(j == 0) {
+                        dp[i] = 0;
+                        continue;
+                    }
+                    dp[i] = Math.min(dp[i], dp[j - 1] + 1);
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+    private int isPal(String s, int i, int j, int[][] dppal) {
+        if(dppal[i][j] == 1 || dppal[i][j] == 2) return dppal[i][j];
+        if(i == j || i + 1 == j) {
+            if(s.charAt(i) == s.charAt(j)) {
+                dppal[i][j] = 1;
+            } else {
+                dppal[i][j] = 2;
+            }
+            return dppal[i][j];
+        }
+        if(s.charAt(i) == s.charAt(j) && dppal[i + 1][j - 1] == 1) {
+            dppal[i][j] = 1;
+        } else {
+            dppal[i][j] = 2;
+        }
+        return dppal[i][j];
+    }
+}
+
+// v4
+public class Solution {
+    public int minCut(String s) {
+        // pre-process substrings
+        // 1:24 - 2:15
+        int n = s.length();
+        int[] dp = new int[n];
+        Arrays.fill(dp, n);
+        dp[0] = 0;
+        boolean[][] dppal = isPal(s); 
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(dppal[j][i]) {
+                    if(j == 0) {
+                        dp[i] = 0;
+                        continue;
+                    }
+                    dp[i] = Math.min(dp[i], dp[j - 1] + 1);
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+    private boolean[][] isPal(String s) {
+        int n = s.length();
+        boolean[][] res = new boolean[n][n];
+        
+        for(int i = n - 1; i >= 0; i--) {
+            for(int j = i; j < n; j++) {
+                if(i == j || i + 1 == j) {
+                    res[i][j] = (s.charAt(i) == s.charAt(j));
+                } else {
+                    if(s.charAt(i) != s.charAt(j)) {
+                        res[i][j] = false;
+                    } else {
+                        res[i][j] = res[i + 1][j - 1];
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}

@@ -25,3 +25,50 @@ public class Solution {
         return dp[m];
     }
 }
+
+// v2
+// This does not work because string has order, i.e. s1 + s2 + s1 can never be achieved.
+// while sum does not have order, i.e. 1 + 2 + 1 = 1 + 1 + 2 (use 1 multiple times)
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 3:30
+        int m = s.length(), n = wordDict.size();
+        boolean[][] dp = new boolean[n + 1][m + 1]; // first 'm' substring can be broken with first 'n' in dict
+        for(int i = 0; i < n + 1; i++) dp[i][0] = true;
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= m; j++) {
+                int ilen = wordDict.get(i).length();
+                if(j >= ilen) {
+                    String sub = s.substring(j - ilen, j);
+                    dp[i + 1][j] = dp[i][j] || (dp[i][j - ilen] && wordDict.get(i).equals(sub));
+                } else {
+                    dp[i + 1][j] = dp[i][j];
+                }
+            }
+        }
+        return dp[n][m];
+    }
+}
+
+
+// v3
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 4:07 - 4:13
+        int m = s.length(), n = wordDict.size();
+        boolean[] dp = new boolean[m + 1];
+        dp[0] = true;
+        for(int i = 0; i <= m; i++) {
+            for(int j = 0; j < n; j++) {
+                String word = wordDict.get(j);
+                int ilen = word.length();
+               if(i >= ilen) {
+                   String sub = s.substring(i - ilen, i);
+                   dp[i] |= sub.equals(word) && dp[i - ilen];
+               }
+            }
+        }
+        return dp[m];
+    }
+}

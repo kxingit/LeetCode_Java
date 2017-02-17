@@ -25,3 +25,17 @@ public class Solution {
         return false;
     }
 }
+
+
+// v2
+public class Solution {
+    public boolean canJump(int[] nums) {
+        // 9:35 - 9:38
+        int currmax = 0, n = nums.length;
+        for(int i = 0; i < n && i <= currmax; i++) {
+            currmax = Math.max(currmax, i + nums[i]);
+            if(currmax >= n - 1) return true;
+        }
+        return false;
+    }
+}

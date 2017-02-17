@@ -61,3 +61,25 @@ public class Solution {
     }
 }
 
+// v4
+public class Solution {
+    public int maxCoins(int[] nums) {
+        // 9:14 - 9:18 dfs - 9:21 DP, memorization search
+        int n = nums.length;
+        int[] A = new int[n + 2];
+        for(int i = 0; i < n; i++) A[i + 1] = nums[i];
+        A[0] = 1; A[n + 1] = 1;
+        int[][] dp = new int[n + 2][n + 2];
+        return getMax(A, 1, n, dp);
+    }
+    private int getMax(int[] A, int i, int j, int[][] dp) {
+        if(dp[i][j] > 0) return dp[i][j];
+        if(i == j) {
+            dp[i][j] = A[i]; // not necessary 
+        }
+        for(int k = i; k <= j; k++) {
+            dp[i][j] = Math.max(dp[i][j], A[k] * A[i - 1] * A[j + 1] + getMax(A, i, k - 1, dp) + getMax(A, k + 1, j, dp));
+        }
+        return dp[i][j];
+    }
+}
