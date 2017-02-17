@@ -43,3 +43,23 @@ public class Solution {
         }
     }
 }
+
+// v3
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        // 10:34 - 10:39
+        TreeLinkNode first = root;
+        while(root != null) {
+            first = root.left;
+            while(root != null) {
+                if(root.left == null) return;
+                root.left.next = root.right;
+                if(root.next != null) {
+                    root.right.next = root.next.left;
+                }
+                root = root.next;
+            }
+            root = first;
+        }
+    }
+}

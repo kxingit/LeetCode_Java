@@ -135,3 +135,46 @@ public class Solution {
         return res;
     }
 }
+
+// v7
+public class Solution {
+    public int lengthOfLIS(int[] nums) {
+        // 12:04 - 12:12
+        int n = nums.length;
+        if(n == 0) return 0;
+        int[] dp = new int[n + 1]; // LIS ending with 'n'th element
+        Arrays.fill(dp, 1);
+        int res = 1;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if(nums[i] > nums[j]) {
+                    dp[i + 1] = Math.max(dp[i + 1], dp[j + 1] + 1);
+                }
+            }
+            res = Math.max(res, dp[i + 1]);
+        }
+        return res;
+    }
+}
+
+// v8
+public class Solution {
+    public int lengthOfLIS(int[] nums) {
+        // 4:50 - 4:53
+        int n = nums.length;
+        if(n == 0) return 0;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int res = 1;
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if(nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+}
