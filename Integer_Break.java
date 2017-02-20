@@ -48,3 +48,19 @@ public class Solution {
         return dp[n];
     }
 }
+
+// v4
+public class Solution {
+    public int integerBreak(int n) {
+        // 11:34 - 11:42
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; j < i; j++) {
+                dp[i] = Math.max(j * (i - j), Math.max(dp[i], dp[j] * (i - j)));
+            }
+        }
+        return dp[n];
+    }
+}

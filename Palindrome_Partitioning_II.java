@@ -155,3 +155,83 @@ public class Solution {
         return res;
     }
 }
+
+// v5
+public class Solution {
+    public int minCut(String s) {
+        // 3:38 - 4:24
+        int m = s.length();
+        int[] dp = new int[m + 1];
+        Arrays.fill(dp, m);
+        boolean[][] isPal = isPal(s);
+        for(int i = 1; i <= m; i++) {
+            for(int j = 1; j <= i; j++) {
+                if(isPal[j - 1][i - 1]) {
+                    if(j == 1) dp[i] = 0;
+                    else dp[i] = Math.min(dp[i], dp[j - 1] + 1);
+                }
+            }
+        }
+        return dp[m];
+    }
+    boolean[][] isPal(String s) {
+        int n = s.length();
+        boolean[][] res = new boolean[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = i; j >= 0; j--) {
+                if(i == j) {
+                    res[i][j] = true;
+                } else if(j + 1 == i) {
+                    res[j][i] = s.charAt(i) == s.charAt(j);
+                } else {
+                    if(s.charAt(i) != s.charAt(j)) {
+                        res[j][i] = false;
+                    } else {
+                        res[j][i] = res[j + 1][i - 1];
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
+
+// v6 
+public class Solution {
+    public int minCut(String s) {
+        // 3:38 - 4:24
+        int m = s.length();
+        int[] dp = new int[m + 1];
+        // Arrays.fill(dp, m);
+        for(int i = 0; i <= m; i++) dp[i] = i - 1;
+        boolean[][] isPal = isPal(s);
+        for(int i = 1; i <= m; i++) {
+            for(int j = 1; j <= i; j++) {
+                if(isPal[j - 1][i - 1]) {
+                    dp[i] = Math.min(dp[i], dp[j - 1] + 1);
+                }
+            }
+        }
+        return dp[m];
+    }
+    boolean[][] isPal(String s) {
+        int n = s.length();
+        boolean[][] res = new boolean[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = i; j >= 0; j--) {
+                if(i == j) {
+                    res[i][j] = true;
+                } else if(j + 1 == i) {
+                    res[j][i] = s.charAt(i) == s.charAt(j);
+                } else {
+                    if(s.charAt(i) != s.charAt(j)) {
+                        res[j][i] = false;
+                    } else {
+                        res[j][i] = res[j + 1][i - 1];
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}

@@ -48,3 +48,18 @@ public class Solution {
     }
 }
 
+// v3
+public class Solution {
+    public boolean isSubsequence(String s, String t) {
+        // 12:17 - 12:28
+        int m = s.length(), n = t.length();
+        int i = 0, j = 0;
+        while(i < m && j < n) {
+            if(s.charAt(i) == t.charAt(j)) {
+                i++;
+            } 
+            j++;
+        }
+        return i == s.length();
+    }
+}

@@ -100,3 +100,24 @@ public class Solution {
         return dp[m];
     }
 }
+
+// v4
+public class Solution {
+    public int backPackVI(int[] nums, int target) {
+        // 9:32 - 9:47
+        int n = nums.length, m = target;
+        int[] dp = new int[m + 1];
+        dp[0] = 1;
+        
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++) {
+                if(i + 1 < nums[j]) {
+                    dp[i + 1] = dp[i + 1]; // nums[j] cannot be used. so dp remains the same
+                } else {
+                    dp[i + 1] += dp[i + 1 - nums[j]]; // add up all possible 
+                }
+            }
+        }
+        return dp[m];
+    }
+}

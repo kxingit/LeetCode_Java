@@ -75,3 +75,10 @@ public class Solution {
         return false;
     }
 }
+
+// v6
+public class Solution {
+    public boolean isPerfectSquare(int num) {
+        return num == (int)Math.sqrt(num) * Math.sqrt(num);
+    }
+}

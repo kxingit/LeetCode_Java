@@ -95,3 +95,21 @@ public class Solution {
         return 0;
     }
 }
+
+// v5
+public class Solution {
+    public int jump(int[] nums) {
+        // 3:15 - 3:18
+        int n = nums.length, currmax = 0, i = 0, lastmax = 0, nsteps = 0;
+        while(i < nums.length && i <= currmax) {
+            if(i > lastmax) {
+                nsteps++;
+                lastmax = currmax;
+            }
+            currmax = Math.max(currmax, i + nums[i]);
+            i++;
+        }
+        if(i < n - 1) return 0; 
+        return nsteps;
+    }
+}

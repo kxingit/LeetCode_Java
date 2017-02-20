@@ -25,3 +25,12 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+        // 1:30 - 1:33
+        int base = minutesToTest / minutesToDie + 1;
+        return (int)Math.ceil(Math.log(buckets) / Math.log(base));
+    }
+}

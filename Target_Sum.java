@@ -27,3 +27,26 @@ public class Solution {
         return dp[n][S + shift];
     }
 }
+
+// v2
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        // 2:02 - 2:21
+        int n = nums.length, m = 2000;
+        int[][] dp = new int[n + 1][2001];
+        dp[0][1000] = 1;
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= m; j++) {
+                if(j >= nums[i]) {
+                    dp[i + 1][j] += dp[i][j - nums[i]];
+                }
+                if(j + nums[i] <= m) {
+                    dp[i + 1][j] += dp[i][j + nums[i]];
+                }
+            }
+        }
+        if(S > 1000) return 0;
+        return dp[n][S + 1000];
+    }
+}

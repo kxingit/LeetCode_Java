@@ -83,3 +83,26 @@ public class Solution {
         return dp[i][j];
     }
 }
+
+
+// v5
+public class Solution {
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        int[] A = new int[n + 2];
+        for(int i = 1; i <= n; i++) {
+            A[i] = nums[i - 1];
+        }
+        A[0] = 1; A[n + 1] = 1;
+        return getMax(A, 1, n);
+    }
+    
+    private int getMax(int[] nums, int i, int j) {
+        int res = 0;
+        for(int k = i; k <= j; k++) {
+            int curr = nums[k] * nums[i - 1] * nums[j + 1] + getMax(nums, i, k - 1) + getMax(nums, k + 1, j);
+            res = Math.max(res, curr);
+        }
+        return res; 
+    }
+}

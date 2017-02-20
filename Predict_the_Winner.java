@@ -55,3 +55,50 @@ public class Solution {
         return dp[i][j];
     }
 }
+
+// v3
+public class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        // 1:42 - 1:48
+        int sum = 0, n = nums.length;
+        for(int i = 0; i < n; i++) sum += nums[i];
+        return getMax(nums, 0, n - 1) * 2 >= sum;
+    }
+    
+    private int getMax(int[] nums, int i, int j) {
+        if(i == j) return nums[i];
+        if(i > j) return 0;
+        int left1 = getMax(nums, i + 2, j) + nums[i];
+        int left2 = getMax(nums, i + 1, j - 1) + nums[i];
+        int right1 = left2 - nums[i] + nums[j];
+        int right2 = getMax(nums, i, j - 2) + nums[j];
+        return Math.max(Math.min(left1, left2), Math.min(right1, right2));
+    }
+}
+
+// v4
+public class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        // 1:42 - 1:48
+        int sum = 0, n = nums.length;
+        for(int i = 0; i < n; i++) sum += nums[i];
+        int[][] dp = new int[n][n];
+        return getMax(nums, 0, n - 1, dp) * 2 >= sum;
+    }
+    
+    private int getMax(int[] nums, int i, int j, int[][] dp) {        
+        if(i == j) {
+            dp[i][j] = nums[i];
+            return dp[i][j];
+        }
+        if(i > j) return 0;
+        if(dp[i][j] > 0) return dp[i][j];
+ 
+        int left1 = getMax(nums, i + 2, j, dp) + nums[i];
+        int left2 = getMax(nums, i + 1, j - 1, dp) + nums[i];
+        int right1 = left2 - nums[i] + nums[j];
+        int right2 = getMax(nums, i, j - 2, dp) + nums[j];
+        dp[i][j] = Math.max(Math.min(left1, left2), Math.min(right1, right2));
+        return dp[i][j];
+    }
+}
