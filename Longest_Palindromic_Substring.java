@@ -103,3 +103,36 @@ public class Solution {
         return cs2;
     }   
 }
+
+// v3
+public class Solution {
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        String res = "";
+        for(int k = 0; k < n; k++) {
+            int i = k, j = k;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(res.length() < j + 1 - i)
+                        res = s.substring(i, j + 1);
+                } else {
+                    break;
+                }
+                i--; j++;
+            }
+        }
+        for(int k = 0; k < n; k++) {
+            int i = k, j = k + 1;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(res.length() < j + 1 - i)
+                        res = s.substring(i, j + 1);
+                }else {
+                    break;
+                }
+                i--; j++;
+            }
+        }
+        return res;
+    }
+}

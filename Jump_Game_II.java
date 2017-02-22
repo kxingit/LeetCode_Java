@@ -113,3 +113,21 @@ public class Solution {
         return nsteps;
     }
 }
+
+// v6
+public class Solution {
+    public int jump(int[] nums) {
+        // 10:41
+        int n = nums.length, i = 0, step = 0, currmax = 0, lastmax = 0;
+        while(i <= currmax && i < n) {
+            if(i > lastmax) {
+                lastmax = currmax;
+                step++;
+            }
+            currmax = Math.max(currmax, i + nums[i]);
+            i++;
+        }
+        if(i < n) return -1;
+        return step;
+    }
+}

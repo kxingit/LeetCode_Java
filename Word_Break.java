@@ -72,3 +72,24 @@ public class Solution {
         return dp[m];
     }
 }
+
+// v4
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 10:00 - 10:13
+        int m = s.length(), n = wordDict.size();
+        boolean[] dp = new boolean[m + 1];
+        dp[0] = true;
+        
+        for(int i = 1; i <= m; i++) {
+            for(int j = 0; j < n; j++) {
+                String word = wordDict.get(j);
+                int len = word.length();
+                if(i >= len && word.equals(s.substring(i - len, i))) { // java substring: [start, end)
+                    dp[i] |= dp[i - len];
+                }
+            }
+        }
+        return dp[m];
+    }
+}
