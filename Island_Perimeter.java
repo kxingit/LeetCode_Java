@@ -87,3 +87,46 @@ public class Solution {
         return result;
     }
 }
+
+// v5
+public class Solution {
+    public int islandPerimeter(int[][] grid) {
+        // 1:27 - 1:30
+        if(grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int m = grid.length, n = grid[0].length;
+        int res = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(grid[i][j] == 0) continue;
+                if(i == 0 || grid[i - 1][j] == 0) res++;
+                if(j == 0 || grid[i][j - 1] == 0) res++;
+                if(i == m - 1 || grid[i + 1][j] == 0) res++;
+                if(j == n - 1 || grid[i][j + 1] == 0) res++;
+            }
+        }
+        return res;
+    }
+}
+
+// v6
+public class Solution {
+    public int islandPerimeter(int[][] grid) {
+        // 1:27 - 1:30 - 1:36
+        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        if(grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int m = grid.length, n = grid[0].length;
+        int res = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(grid[i][j] == 0) continue;
+                for(int[] dir : directions) {
+                    int x = i + dir[0], y = j + dir[1];
+                    if(x < 0 || y < 0 || x > m - 1 || y > n - 1 || grid[x][y] == 0) {
+                        res++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
