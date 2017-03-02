@@ -19,3 +19,23 @@ public class Solution {
         return result;
     }
 }
+
+// v2
+public class Solution {
+    public int rob(TreeNode root) {
+        // 9:32 - 9:38
+        int[] result = dfs(root);
+        return Math.max(result[0], result[1]);
+    }
+    private int[] dfs(TreeNode root) {
+        int[] result = new int[2]; // 0: root selected; 1: root not selected
+        if(root == null) {
+            return new int[]{0, 0};
+        }
+        int[] left = dfs(root.left); 
+        int[] right = dfs(root. right);
+        result[0] = root.val + left[1] + right[1];
+        result[1] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        return result;
+    }
+}

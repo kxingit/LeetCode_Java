@@ -34,4 +34,39 @@ public class SummaryRanges {
     }
 }
 
-
+// v2
+public class Solution {
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        // 10:09 - 10:23
+        int n = intervals.size();
+        boolean isInserted = false;
+        for(int i = 0; i < n; i++) {
+            if(intervals.get(i).start > newInterval.start) {
+                intervals.add(i, newInterval);
+                isInserted = true;
+                break;
+            }
+        }
+        if(!isInserted) {
+            intervals.add(newInterval);
+        }
+        List<Interval> res = new ArrayList();
+        if(intervals.size() == 0) {
+            res.add(newInterval);
+            return res;
+        }
+        res.add(intervals.get(0));
+        for(int i = 1; i < intervals.size(); i++){
+            Interval curr = res.get(res.size() - 1);
+            Interval next = intervals.get(i);
+            if(curr.end < next.start) {
+                res.add(next);
+            } else {
+                Interval merged = new Interval(curr.start, Math.max(curr.end, next.end));
+                res.remove(res.size() - 1);
+                res.add(merged);
+            }
+        }
+        return res;
+    }
+}
