@@ -82,3 +82,42 @@ public class RandomizedSet {
         return list.get(r.nextInt(list.size()));
     }
 }
+
+// v3
+public class RandomizedSet {
+    // 10:34 - 10:38
+    private List<Integer> list;
+    private HashMap<Integer, Integer> map_idx;
+    /** Initialize your data structure here. */
+    public RandomizedSet() {
+        list = new ArrayList();
+        map_idx = new HashMap();
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    public boolean insert(int val) {
+        if(map_idx.containsKey(val)) return false;
+        list.add(val);
+        map_idx.put(val, list.size() - 1);
+        return true;
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    public boolean remove(int val) {
+        if(map_idx.containsKey(val) == false) return false;
+        
+        int index = map_idx.get(val);
+        int lastnum = list.get(list.size() - 1);
+        list.set(index, lastnum);
+        list.remove(list.size() - 1);
+        map_idx.put(lastnum, index);
+        map_idx.remove(val);
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    public int getRandom() {
+        Random r = new Random();
+        return list.get(r.nextInt(list.size()));
+    }
+}

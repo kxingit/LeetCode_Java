@@ -58,3 +58,33 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int maxEnvelopes(int[][] A) {
+        // 9:05 - 9:13
+        Arrays.sort(A, (a, b) -> {
+            if(a[0] != b[0]) {
+                return b[0] - a[0];
+            } else {
+                return b[1] - a[1];
+            }
+        });
+        
+        // LIS
+        int n = A.length;
+        if(n == 0) return 0;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int res = 1;
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if(A[j][1] > A[i][1] && A[j][0] > A[i][0]) { // both
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+}

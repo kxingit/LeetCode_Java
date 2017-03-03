@@ -57,3 +57,19 @@ public class Solution {
         return xcan.contains(z) || ycan.contains(z);
     }
 }
+
+// v2: math - Bézout's identity
+public class Solution {
+    public boolean canMeasureWater(int x, int y, int z) {
+        // 9:42 - 9:50
+        if(z == 0) return true;
+        // if(x == 0) return z == y;
+        // if(y == 0) return z == x;
+        if(z <= x + y && z % gcd(x, y) == 0) return true;
+        return false;
+    }
+    private int gcd(int a, int b) {
+        if(b == 0) return a;
+        return gcd(b, a % b);
+    }
+}

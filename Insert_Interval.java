@@ -52,3 +52,33 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        // 8:57 - 9:04
+        int n = intervals.size();
+        for(int i = 0; i < n; i++) {
+            if(intervals.get(i).start > newInterval.start) {
+                intervals.add(i, newInterval);
+                break;
+            }
+        }
+        if(intervals.size() == n) intervals.add(newInterval);
+        
+        List<Interval> res = new ArrayList();
+        res.add(intervals.get(0));
+        for(int i = 0; i < intervals.size(); i++) {
+            Interval curr = res.get(res.size() - 1);
+            Interval next = intervals.get(i);
+            if(curr.end < next.start) {
+                res.add(next);
+            } else { // need merge
+                Interval merged = new Interval(curr.start, Math.max(curr.end, next.end));
+                res.remove(res.size() - 1);
+                res.add(merged);
+            }
+        }
+        return res;
+    }
+}
