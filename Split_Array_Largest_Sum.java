@@ -31,3 +31,38 @@ public class Solution {
         return res;
     }
 }
+
+// v2: binary search
+public class Solution {
+    public int splitArray(int[] nums, int m) {
+        long l = 0, r = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            l = Math.max((int)l, nums[i]);
+            r += nums[i];
+        }
+        long ans = 0;
+        while(l <= r) {
+            long mid = (l + r) / 2;
+            if (canSplit(mid, nums, m)) {
+                ans = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return (int)ans;
+    }
+    public boolean canSplit(long max_val, int[] nums, int m) {
+        int cnt = 1;
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (sum + nums[i] > max_val) {
+                cnt++;
+                sum = nums[i];
+            } else {
+                sum += nums[i];
+            }
+        }
+        return cnt <= m;
+    }
+}

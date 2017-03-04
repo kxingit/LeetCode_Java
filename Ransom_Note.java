@@ -37,3 +37,20 @@ public class Solution {
         return true;
     }
 }
+
+// v3
+public class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        // 9:42 - 9:44
+        int[] cnt = new int[26];
+        for(int i = 0 ; i< magazine.length(); i++) {
+            cnt[magazine.charAt(i) - 'a']++;
+        }
+        for(int i = 0; i < ransomNote.length(); i++) {
+            if(cnt[ransomNote.charAt(i) - 'a']-- == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
