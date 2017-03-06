@@ -83,3 +83,39 @@ public class Solution {
         return result;
     }
 }
+
+// v5
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        // 11:46 - 11:47
+        List<Integer> res = new ArrayList();
+        inorder(root, res);
+        return res;
+    }
+    private void inorder(TreeNode root, List<Integer> res) {
+        if(root == null) return;
+        inorder(root.left, res);
+        res.add(root.val);
+        inorder(root.right, res);
+    }
+}
+
+// v6
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        // 11:49 - 11:53
+        Stack<TreeNode> stack = new Stack();
+        List<Integer> res = new ArrayList();
+        while(root != null || stack.size() > 0) {
+            if (root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                res.add(root.val);
+                root = root.right;
+            }
+        }
+        return res;
+    }
+}
