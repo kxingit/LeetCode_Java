@@ -103,3 +103,28 @@ public class Solution {
         }
     }
 }
+
+// v6
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        // 10:11 - 10:20
+        if(root == null) return;
+        TreeLinkNode parent = root, child = root.left;
+        while(child != null) { // level
+            TreeLinkNode tmp = child; // the next parent
+            while(child != null) { // for each level
+                child.next = parent.right;
+                child = child.next;
+                parent = parent.next;
+                if(parent != null) {
+                    child.next = parent.left;
+                } else {
+                    child.next = null;
+                }
+                child = child.next; // to next for both cases
+            }
+            parent = tmp;
+            child = parent.left;
+        }
+    }
+}
