@@ -313,3 +313,40 @@ public class Solution {
         return res;
     }
 }
+
+// v8
+public class Solution {
+    public int minCut(String s) {
+        // 8:53 - 8:56 - 9:36
+        int n = s.length();
+        int[] dp = new int [n + 1]; // min n cuts 
+        for(int i = 1; i <= n; i++) dp[i] = i - 1;
+        dp[0] = -1; // edge
+        boolean[][] isPal = isPal(s);
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(isPal[j][i] == false) {
+                    continue;
+                }
+                dp[i + 1] = Math.min(dp[i + 1], dp[j] + 1);
+            }
+        }
+        return dp[n];
+    }
+    private boolean[][] isPal(String s) {
+        int n = s.length();
+        boolean[][] res = new boolean[n][n];
+        for(int r = 0; r < n; r++) {
+            for(int l = r; l >= 0; l--) {
+                if(l == r) { // edge
+                    res[l][r] = true;
+                }else if(l + 1 == r) {
+                    res[l][r] = s.charAt(l) == s.charAt(r);
+                }else if(s.charAt(l) == s.charAt(r) && res[l + 1][r - 1]) {
+                    res[l][r] = true;
+                }
+            }
+        }
+        return res;
+    }
+}
