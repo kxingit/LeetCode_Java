@@ -350,3 +350,47 @@ public class Solution {
         return res;
     }
 }
+
+// v9
+public class Solution {
+    public int minCut(String s) {
+        // 10:07 - 10:19
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        for(int i = 0; i <= n; i++) {
+            dp[i] = i - 1;
+        }
+        
+        boolean[][] isPal = isPal(s);
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(isPal[j][i]) {
+                    dp[i + 1] = Math.min(dp[i + 1], 1 + dp[j]);
+                }
+            }
+        }
+        
+        return dp[n];
+    }
+    private boolean[][] isPal(String s) {
+        int n = s.length();
+        boolean[][] res = new boolean[n][n];
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = i; j >= 0; j--) {
+                if(j >= i) {
+                    res[j][i] = true;
+                } 
+                else if(j + 1 == i) { // must have this because j starts from i
+                    res[j][i] = s.charAt(j) == s.charAt(i);
+                }
+                else {
+                    res[j][i] = s.charAt(j) == s.charAt(i) && res[j + 1][i - 1];
+                }
+            }
+        }
+        
+        return res;
+    }
+}

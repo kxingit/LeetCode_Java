@@ -1,7 +1,7 @@
 /*
  * Given a list of unique words, find all pairs of distinct indices (i, j) in the given list, so that the concatenation of the two words, i.e. words[i] + words[j] is a palindrome.
  */
-// LTE: 30 / 134 test cases passed.
+// TLE: 30 / 134 test cases passed.
 public class Solution {
     public List<List<Integer>> palindromePairs(String[] words) {
         // 4:00 - 4:11

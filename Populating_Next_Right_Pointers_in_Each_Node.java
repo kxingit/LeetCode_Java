@@ -128,3 +128,26 @@ public class Solution {
         }
     }
 }
+
+// v7
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        // 8:58 - 9:05
+        if(root == null) return;
+        TreeLinkNode parent = root;
+        while(parent != null) { // level
+            TreeLinkNode tmp = parent.left;
+            while(parent != null) { // each level
+                if(parent.left == null) return;
+                parent.left.next = parent.right;
+                TreeLinkNode nextparent = parent.next;
+                if(nextparent == null) {
+                    break;
+                }
+                parent.right.next = nextparent.left;
+                parent = nextparent;
+            }
+            parent = tmp;
+        }
+    }
+}

@@ -156,3 +156,23 @@ public class Solution {
         return res;
     }
 }
+
+// v7
+public class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // 9:29 - 9:31
+        List<Integer> res = new ArrayList();
+        Stack<TreeNode> stack = new Stack();
+        while(root != null || !stack.isEmpty()) {
+            if(root != null) {
+                res.add(root.val);
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                root = root.right;
+            }
+        }
+        return res;
+    }
+}

@@ -24,3 +24,24 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public int majorityElement(int[] nums) {
+        // 10:01 - 10:04
+        int res = nums[0];
+        int count = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(res == nums[i]) {
+                count++;
+            } else {
+                count--;
+                if(count == 0) {
+                    res = nums[i];
+                    count = 1;
+                }
+            }
+        }
+        return res;
+    }
+}

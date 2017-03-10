@@ -47,3 +47,46 @@ public class Solution {
         else return res;
     }
 }
+
+// v2
+public class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // 11:00 - 11:08
+        int n = numCourses;
+        int[] indegree = new int[n];
+        List[] edges = new ArrayList[n];
+        for(int i = 0; i < n; i++) {
+            edges[i] = new ArrayList<Integer>();
+        }
+        
+        for(int[] pre : prerequisites) {
+            indegree[pre[0]]++;
+            edges[pre[1]].add(pre[0]);
+        }
+        
+        Queue<Integer> q = new LinkedList();
+        for(int i = 0; i < n; i++) {
+            if(indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+        
+        int[] res = new int[n];
+        int count = 0;
+        while(q.size() > 0) {
+            int curr = q.poll();
+            res[count] = curr;
+            count++;
+            List<Integer> nexts = edges[curr];
+            for(Integer next : nexts) {
+                indegree[next]--;
+                if(indegree[next] == 0) {
+                    q.add(next);
+                }
+            }
+        }
+        
+        if(count < n) return new int[0];
+        return res;
+    }
+}

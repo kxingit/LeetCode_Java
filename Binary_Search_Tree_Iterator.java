@@ -35,3 +35,36 @@ public class BSTIterator {
         }
     }
 }
+
+// v2
+public class BSTIterator {
+    // 8:51 - 8:56
+    public Stack<TreeNode> stack = new Stack();
+    public TreeNode node;
+    
+    public BSTIterator(TreeNode root) {
+        this.node = root;
+      while(node != null) {
+          stack.push(node);
+          node = node.left;
+      }  
+        
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        node = stack.pop();
+        TreeNode p = node.right;
+        while(p != null) {
+            stack.push(p);
+            p = p.left;
+        }
+        return node.val;
+    }
+}
+

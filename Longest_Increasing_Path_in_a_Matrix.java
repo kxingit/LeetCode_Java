@@ -5,7 +5,7 @@
  * From each cell, you can either move to four directions: left, right, up or down. You may NOT move diagonally or move outside of the boundary (i.e. wrap-around is not allowed).
  *
  */
-// LTE: 134 / 137 test cases passed.
+// TLE: 134 / 137 test cases passed.
 public class Solution {
     private int result = 1;
     public int longestIncreasingPath(int[][] matrix) {

@@ -95,3 +95,43 @@ public class Solution {
         return true;
     }
 }
+
+// v3
+public class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // 10:23 - 10:32
+        int n = numCourses;
+        int[] indegree = new int[n];
+        List[] edges = new ArrayList[n];
+        for(int i = 0; i < n; i++) {
+            edges[i] = new ArrayList<Integer>();
+        }
+        
+        for(int[] pre : prerequisites) {
+            indegree[pre[0]]++;
+            edges[pre[1]].add(pre[0]);
+        }
+        
+        Queue<Integer> q = new LinkedList();
+        for(int i = 0; i < n; i++) {
+            if(indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+        
+        int count = 0;
+        while(q.size() > 0) {
+            int curr = q.poll();
+            count++;
+            List<Integer> nexts = edges[curr];
+            for(Integer next : nexts) {
+                indegree[next]--;
+                if(indegree[next] == 0) {
+                    q.add(next);
+                }
+            }
+        }
+        
+        return count == n;
+    }
+}
