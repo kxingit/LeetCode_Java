@@ -39,3 +39,47 @@ public class Solution {
         return result;
     }
 }
+
+
+// v3: more recursions, slower
+public class Solution {
+    public int rob(TreeNode root) {
+        // 2:04 - 2:10
+        // if(root == null) return 0;
+        return Math.max(robRoot(root), robNoRoot(root));
+    }
+    
+    private int robRoot(TreeNode root) {
+        if(root == null) return 0;
+        return root.val + robNoRoot(root.left) + robNoRoot(root.right);
+    }
+    
+    private int robNoRoot(TreeNode root) {
+        if(root == null) return 0;
+        return Math.max(robRoot(root.left), robNoRoot(root.left)) 
+            + Math.max(robRoot(root.right), robNoRoot(root.right));
+    }
+}
+
+// v4
+public class Solution {
+    public int rob(TreeNode root) {
+        // 2:14 - 2:18
+        int[] res = dfs(root);
+        return Math.max(res[0], res[1]);
+    }
+    
+    private int[] dfs(TreeNode root) {
+        int[] res = new int[2];
+        if(root == null) {
+            res[0] = 0; // rob root
+            res[1] = 0;
+            return res;
+        }
+        int[] left = dfs(root.left);
+        int[] right = dfs(root.right);
+        res[0] = root.val + left[1] + right[1];
+        res[1] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        return res;
+    }
+}

@@ -45,3 +45,28 @@ public class Solution {
         return res;
     }
 }
+
+// v3: some other ways to if..
+public class Solution {
+    public int majorityElement(int[] nums) {
+        // 2:36 - 2:38
+        int count = 0, cand = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(count == 0) {
+                cand = nums[i];
+                count++;
+            } else {
+                if(nums[i] != cand) {
+                    count--;
+                    if(count == 0) {
+                        cand = nums[i];
+                        count = 1;
+                    }
+                } else {
+                    count++;
+                }
+            }
+        }
+        return cand;
+    }
+}

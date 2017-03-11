@@ -57,3 +57,55 @@ public class Solution {
         return dp[n - 1];
     }
 }
+
+// v3
+public class Solution {
+    public int rob(int[] nums) {
+        // 2:20 - 2:27
+        int n = nums.length;
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+        
+        return Math.max(robRange(nums, 1, n - 1), robRange(nums, 0, n -2));
+    }
+    
+    private int robRange(int[] nums, int i, int j) {
+        int n = j - i + 1;
+        if(n == 0) return 0;
+        if(n == 1) return nums[0 + i];
+        int[] dp = new int[n];
+        dp[0] = nums[0 + i];
+        dp[1] = Math.max(nums[0 + i], nums[1 + i]);
+        for(int k = 2; k < n; k++) { // index = k + i
+            dp[k] = Math.max(nums[k + i] + dp[k - 2], dp[k - 1]);
+        }
+        return dp[n - 1];
+    }
+}
+
+
+// v4
+public class Solution {
+    public int rob(int[] nums) {
+        // 2:20 - 2:27 - 2:29
+        // Rolling array
+        int n = nums.length;
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+        
+        return Math.max(robRange(nums, 1, n - 1), robRange(nums, 0, n -2));
+    }
+    
+    private int robRange(int[] nums, int i, int j) {
+        int n = j - i + 1;
+        if(n == 0) return 0;
+        if(n == 1) return nums[0 + i];
+        int[] dp = new int[3]; 
+        dp[0] = nums[0 + i];
+        dp[1] = Math.max(nums[0 + i], nums[1 + i]);
+        for(int k = 2; k < n; k++) { // index = k + i
+            dp[k % 3] = Math.max(nums[k + i] + dp[(k - 2) % 3], dp[(k - 1) % 3]);
+        }
+        return dp[(n - 1) % 3];
+    }
+}

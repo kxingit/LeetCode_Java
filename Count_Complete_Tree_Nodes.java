@@ -50,3 +50,43 @@ public class Solution {
         return 1 + countNodes(root.left) + countNodes(root.right);
     }
 }
+
+// v4
+public class Solution {
+    public int countNodes(TreeNode root) {
+        // 12:44 - 12:48
+        if(root == null) return 0;
+        int lefth = getLefth(root.left);
+        int righth = getRighth(root.right);
+        if(lefth == righth) return (1 << (lefth + 1)) - 1; // 2 ^ h - 1
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+    
+    private int getLefth(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        
+        int res = 0;
+        while(root != null) {
+            root = root.left;
+            res++;
+        }
+        
+        return res;
+    }
+    
+    private int getRighth(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        
+        int res = 0;
+        while(root != null) {
+            root = root.right;
+            res++;
+        }
+        
+        return res;
+    }
+}

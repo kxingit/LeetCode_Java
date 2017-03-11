@@ -63,3 +63,33 @@ public class Solution {
         return result + res[n - 1];
     }
 }
+
+// v3
+public class Solution {
+    public int candy(int[] ratings) {
+        // 10:18 - 10:22
+        int n = ratings.length;
+        int[] dp = new int[n];
+        dp[0] = 1;
+        for(int i = 1; i < n; i++) {
+            if(ratings[i] > ratings[i - 1]) {
+                dp[i] = dp[i - 1] + 1;
+            } else {
+                dp[i] = 1;
+            }
+        }
+        
+        for(int i = n - 2; i >= 0; i--) {
+            if(ratings[i] > ratings[i + 1]) {
+                dp[i] = Math.max(dp[i + 1] + 1, dp[i]);
+            }
+        }
+        
+        int res = 0;
+        for(int i = 0; i < n; i++) {
+            res += dp[i];
+        }
+        
+        return res;
+    }
+}

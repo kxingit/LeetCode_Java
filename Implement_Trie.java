@@ -213,3 +213,63 @@ public class Trie {
  * boolean param_2 = obj.search(word);
  * boolean param_3 = obj.startsWith(prefix);
  */
+
+// v4
+    // 9:10
+class TrieNode {
+    TrieNode[] children;
+    boolean hasWord;
+    
+    TrieNode() {
+        children = new TrieNode[26];
+        hasWord = false;
+    }
+    
+    public void insert(String s, int i) {
+        if(i == s.length()) {
+            hasWord = true;
+            return;
+        }
+        char c = s.charAt(i);
+        if(children[c - 'a'] == null) {
+            children[c - 'a'] = new TrieNode();
+        }
+        children[c - 'a'].insert(s, i + 1); // children!
+    }
+    
+    public TrieNode search(String s, int i) {
+        if(i == s.length()) {
+            return this;
+        }
+        char c = s.charAt(i);
+        if(children[c - 'a'] == null) {
+            return null;
+        }
+        return children[c - 'a'].search(s, i + 1);
+    }
+}
+public class Trie {
+    TrieNode root;
+ 
+    /** Initialize your data structure here. */
+    public Trie() {
+        root = new TrieNode();
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        root.insert(word, 0);
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        TrieNode node = root.search(word, 0);
+        return node != null && node.hasWord;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        TrieNode node = root.search(prefix, 0);
+        return node != null;
+    }
+}

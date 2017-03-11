@@ -71,3 +71,63 @@ public class WordDictionary {
 }
 
 
+
+// v2
+public class WordDictionary {
+    // 9:40 -10:06
+    class TrieNode {
+        TrieNode children[];
+        boolean hasWord;
+         
+        TrieNode() {
+            children = new TrieNode[26];
+            hasWord = false;
+        }
+    }
+ 
+    /** Initialize your data structure here. */
+    TrieNode root;
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+     
+    /** Adds a word into the data structure. */
+    public void addWord(String word) {
+        int i = 0;
+        TrieNode node = root;
+        while(i < word.length()) {
+            char c = word.charAt(i);
+            if(node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new TrieNode();
+            }
+            node = node.children[c - 'a'];
+            i++;
+        }
+        node.hasWord = true;
+    }
+     
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    public boolean search(String word) {
+        return searchhelper(word, 0, root);
+    }
+     
+    public boolean searchhelper(String word, int index, TrieNode node) {
+        if(word.length() == index) return node.hasWord;
+        char c = word.charAt(index);
+         
+        if(c != '.') {
+            if(node.children[c - 'a'] == null) return false;
+            return searchhelper(word, index + 1, node.children[c - 'a']);
+        }  
+        // is '.'
+        for(int ic = 0; ic < 26; ic++) {
+            if(node.children[ic] == null) continue; // !
+            if(searchhelper(word, index + 1, node.children[ic])) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+

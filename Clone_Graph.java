@@ -85,3 +85,45 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        // 10:23 - 10:31 - 10:35
+        if(node == null) return null;
+        // get all nodes
+        List<UndirectedGraphNode> nodes = getNodes(node);
+        
+        // clone and map nodes
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap();
+        for(UndirectedGraphNode p : nodes) {
+            map.put(p, new UndirectedGraphNode(p.label));
+        }
+        
+        // clone edges
+        for(UndirectedGraphNode p : nodes) {
+            for(UndirectedGraphNode neighbor : p.neighbors) {
+                map.get(p).neighbors.add(map.get(neighbor));
+            }
+        }
+        
+        return map.get(node);
+    }
+    List<UndirectedGraphNode> getNodes(UndirectedGraphNode node) {
+        List<UndirectedGraphNode> res = new ArrayList();
+        HashSet<UndirectedGraphNode> isVisited = new HashSet();
+        Queue<UndirectedGraphNode> q = new LinkedList();
+        q.add(node);
+        isVisited.add(node); // !
+        while(q.size() > 0) {
+            UndirectedGraphNode p = q.poll();
+            res.add(p);
+            for(UndirectedGraphNode neighbor : p.neighbors) {
+                if(isVisited.contains(neighbor)) continue;
+                isVisited.add(neighbor); // !
+                q.add(neighbor);
+            }
+        }
+        return res;
+    }
+}
