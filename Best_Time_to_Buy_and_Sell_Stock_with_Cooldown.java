@@ -45,3 +45,51 @@ public class Solution {
         return sell;
     }
 }
+
+// v3
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // 1:39 - 1:48
+        int n = prices.length;
+        if(n < 2) return 0;
+        if(n == 2) return Math.max(0, prices[1] - prices[0]);
+        
+        int[] has = new int[n];
+        int[] no = new int[n];
+        has[0] = -prices[0];
+        no[0] = 0;
+        has[1] = Math.max(-prices[0], -prices[1]);
+        no[1] = Math.max(0, prices[1] - prices[0]);
+        
+        for(int i = 2; i < n; i++) {
+            has[i] = Math.max(has[i - 1], no[i - 2] - prices[i]);
+            no[i] = Math.max(no[i - 1], prices[i] + has[i - 1]);
+        }
+        
+        return no[n - 1];
+    }
+}
+
+// v4
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // 1:39 - 1:48 - 1:50 Rolling array
+        int n = prices.length;
+        if(n < 2) return 0;
+        if(n == 2) return Math.max(0, prices[1] - prices[0]);
+        
+        int[] has = new int[2];
+        int[] no = new int[3];
+        has[0] = -prices[0];
+        no[0] = 0;
+        has[1] = Math.max(-prices[0], -prices[1]);
+        no[1] = Math.max(0, prices[1] - prices[0]);
+        
+        for(int i = 2; i < n; i++) {
+            has[i % 2] = Math.max(has[(i - 1) % 2], no[(i - 2) % 3] - prices[i]);
+            no[i % 3] = Math.max(no[(i - 1) % 3], prices[i] + has[(i - 1) % 2]);
+        }
+        
+        return no[(n - 1) % 3];
+    }
+}
