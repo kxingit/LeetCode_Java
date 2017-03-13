@@ -195,3 +195,50 @@ public class Solution {
         return leaves;
     }
 }
+
+// v4
+public class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        // 9:03 - 9:14
+        List<Integer> leaves = new ArrayList();
+        if(n <= 2) {
+            for(int i = 0; i < n; i++) {
+                leaves.add(i);
+            }
+            return leaves;
+        }
+        
+        HashMap<Integer, HashSet<Integer>> graph = new HashMap();
+        for(int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<Integer>());
+        }
+        
+        for(int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+        
+        for(int i = 0; i < n; i++) {
+            if(graph.get(i).size() == 1) {
+                leaves.add(i);
+            }
+        }
+        
+        while(n > 2) {
+            n -= leaves.size();
+            List<Integer> newLeaves = new ArrayList();
+            for(Integer leaf : leaves) {
+                Set<Integer> neighbors = graph.get(leaf);
+                for(Integer neighbor : neighbors) {
+                    graph.get(neighbor).remove(leaf);
+                    if(graph.get(neighbor).size() == 1) {
+                        newLeaves.add(neighbor);
+                    }
+                }
+            }
+            leaves = newLeaves;
+        }
+        
+        return leaves;
+    }
+}

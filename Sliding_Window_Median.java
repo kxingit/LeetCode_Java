@@ -145,3 +145,42 @@ public class Solution {
         return res;
     }
 }
+
+// v4
+public class Solution {
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        // 11:58 - 12:04
+        int n = nums.length;
+        int m = n - k  + 1;
+        double[] res = new double[m];
+        
+        PriorityQueue<Double> maxheap = new PriorityQueue(k, Collections.reverseOrder());
+        PriorityQueue<Double> minheap = new PriorityQueue(k);
+        
+        for(int i = 0; i < n; i++) {
+            maxheap.add((double)nums[i]);
+            minheap.add(maxheap.poll());
+            if(minheap.size() > maxheap.size()) {
+                maxheap.add(minheap.poll());
+            }
+            
+            if(i >= k - 1) {
+                res[i - k + 1] = maxheap.size() == minheap.size() ? maxheap.peek() / 2 + minheap.peek() / 2 : maxheap.peek();
+                double toRemove = (double)nums[i - k + 1];
+                if(toRemove <= maxheap.peek()) {
+                    maxheap.remove(toRemove);
+                } else {
+                    minheap.remove(toRemove);
+                }
+                
+                if(maxheap.size() < minheap.size()) {
+                    maxheap.add(minheap.poll());
+                }
+                if(maxheap.size() > minheap.size() + 1) {
+                    minheap.add(maxheap.poll());
+                }
+            }
+        }
+        return res;
+    }
+}

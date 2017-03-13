@@ -112,3 +112,119 @@ public class NumArray {
         return x & -x; 
     }
 }
+
+// v4
+public class NumArray {
+    // 9:48 - 10:00
+    int[] A;
+    int[] bit;
+    int n;
+ 
+    public NumArray(int[] nums) {
+        n = nums.length;
+        A = new int[n + 1];
+        bit = new int[n + 1];
+        for(int i = 0; i < n; i++) {
+            update(i, nums[i]);
+        }
+    }
+    
+    public void update(int i, int val) {
+        int diff = val - A[i + 1];
+        for(int k = i + 1; k < n + 1; k += lowbit(k)) { 
+            bit[k] += diff;
+        }
+        A[i + 1] = val;
+    }
+    
+    public int sumRange(int i, int j) {
+        return read(j + 1) - read(i);
+    }
+    
+    public int read(int i) {
+        int res = 0;
+        for(int k = i; k > 0; k -= lowbit(k)) {
+            res += bit[k];
+        }
+        return res;
+    }
+    
+    public int lowbit(int x) {
+        return x & -x;
+    }
+}
+
+
+// v5
+public class NumArray {
+    // 10:38 - 10：45
+    int n;
+    int[] bit;
+    int[] array;
+ 
+    public NumArray(int[] nums) {
+        n = nums.length;
+        bit = new int[n + 1];
+        array = new int[n];
+        for(int i = 0; i < n; i++) {
+            update(i, nums[i]);
+        }
+    }
+    
+    public void update(int i, int val) {
+        int diff = val - array[i];
+        for(int j = i + 1; j <= n; j += j & -j) {
+            bit[j] += diff;
+        }
+        array[i] = val;
+    }
+    
+    public int read(int i) {
+        int res = 0;
+        for(int j = i + 1; j > 0; j -= j & -j) {
+            res += bit[j];
+        }
+        return res;
+    }
+    
+    public int sumRange(int i, int j) {
+        return read(j) - read(i - 1);
+    }
+}
+
+// v6: Final: Binary Indexed Tree/Fenwick Tree
+public class NumArray {
+    // 10:50 - 10:55
+    int[] bit;
+    int[] array;
+    int n;
+ 
+    public NumArray(int[] nums) {
+        n = nums.length;
+        bit = new int[n + 1];
+        array = new int[n];
+        for(int i = 0; i < n; i++) {
+            update(i, nums[i]);
+        }
+    }
+     
+    public void update(int i, int val) {
+        int diff = val - array[i];
+        for(int j = i + 1; j <= n; j += j & -j) {
+            bit[j] += diff;
+        }
+        array[i] = val;
+    }
+     
+    public int read(int i) {
+        int res = 0;
+        for(int j = i + 1; j > 0; j -= j & -j) {
+            res += bit[j];
+        }
+        return res;
+    }
+     
+    public int sumRange(int i, int j) {
+        return read(j) - read(i - 1);
+    }
+}
