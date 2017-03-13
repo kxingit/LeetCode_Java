@@ -15,3 +15,24 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public int countSegments(String s) {
+        // 7:37 - 7:42
+        int i = 0, count = 0;
+        while(i < s.length()) {
+            if(s.charAt(i) != ' ') {
+                count++;
+                while(i < s.length()) {
+                    if(s.charAt(i) == ' ') {
+                        break;
+                    }
+                    i++;
+                }
+            }
+            i++;
+        }
+        return count;
+    }
+}
