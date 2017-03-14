@@ -24,3 +24,24 @@ public class Solution {
         return -1;
     }
 }
+
+// v2
+public class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+        for(int i = 0; i < n; i++) {
+            res[i] = nextGreater(nums, i);
+        }
+        return res;
+    }
+    private int nextGreater(int[] nums, int pos) {
+        int n = nums.length;
+        for(int i = pos + 1; i < nums.length * 2; i++) { // trick: "double" the array
+            if(nums[i % n] > nums[pos % n]) {
+                return nums[i % n];
+            }
+        }
+        return -1;
+    }
+}
