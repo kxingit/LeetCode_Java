@@ -164,3 +164,37 @@ public class Solution {
         return W;
     }
 }
+
+// v6
+public class Solution {
+    class Project {
+        int c, p;
+        Project(int c, int p) {
+            this.c = c;
+            this.p = p;
+        }
+    }
+    public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
+        // 10:39 - 10:49
+        int n = Profits.length;
+        Project[] projects = new Project[n];
+        for(int i = 0; i < n; i++) {
+            projects[i] = new Project(Capital[i], Profits[i]);
+        }
+        Arrays.sort(projects, (a, b) -> a.c - b.c);
+        
+        PriorityQueue<Integer> pq = new PriorityQueue(k, Collections.reverseOrder());
+        
+        int pos = 0;
+        for(int i = 0; i < k && i < n; i++) {
+            while(pos < n && W >= projects[pos].c) {
+                pq.add(projects[pos].p);
+                pos++;
+            }
+            if(pq.size() == 0) break;
+            W += pq.poll();
+        }
+        
+        return W;
+    }
+}

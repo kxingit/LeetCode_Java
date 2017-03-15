@@ -16,3 +16,23 @@ public class Solution {
         return res.toString();
     }
 }
+
+// v2
+public class Solution {
+    public String convertToBase7(int num) {
+        // 9:23 - 9:25
+        int sign = num < 0 ? -1 : 1;
+        num = Math.abs(num);
+        if(num == 0) return "0";
+        StringBuffer res = new StringBuffer();
+        while(num > 0) {
+            res.insert(0, (char)(num % 7 + '0'));
+            num = num / 7;
+        }
+        if(sign < 0) {
+            res.insert(0, '-');
+        }
+        
+        return res.toString();
+    }
+}

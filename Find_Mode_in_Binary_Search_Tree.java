@@ -76,3 +76,44 @@ public class Solution {
         inorder(root.right, count);
     }
 }
+
+// v3
+public class Solution {
+    int curval = 0, curcount = 0, maxcount = 0;
+    List<Integer> res = new ArrayList();
+    public int[] findMode(TreeNode root) {
+        // 9:48 - 10:25
+        if(root == null) return new int[0];
+        
+        inorder(root);
+        
+        int[] ret = new int[res.size()];
+        for(int i = 0; i < res.size(); i++) {
+            ret[i] = res.get(i);
+        }
+        
+        return ret;
+        
+    }
+    
+    public void inorder(TreeNode root) {
+        if(root == null) return;
+        inorder(root.left);
+        if(curval != root.val) {
+            curcount = 1;
+            curval = root.val;
+        } else {
+            curcount++;
+        }
+        
+        if(curcount > maxcount) {
+            maxcount = curcount;
+            res.clear();
+            res.add(curval);
+        } else if(curcount == maxcount) {
+            res.add(curval);
+        }
+        
+        inorder(root.right);
+    }
+}

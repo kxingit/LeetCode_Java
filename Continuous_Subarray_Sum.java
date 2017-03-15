@@ -24,3 +24,33 @@ public class Solution {
         return false;
     }
 }
+
+// v2
+public class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        // 9:28 - 9:38
+        int n = nums.length;
+        if(n <= 1) return false;
+ 
+        int[] sum = new int[n];
+        HashMap<Integer, Integer> map = new HashMap();
+        if(k == 0) k = Integer.MAX_VALUE;
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                sum[i] = nums[i];
+            } else {
+                sum[i] = nums[i] + sum[i - 1];
+            }
+            if(sum[i] % k == 0 && i >= 1) {
+                return true;
+            }
+            if(map.containsKey(sum[i] % k) && i - map.get(sum[i] % k) > 1) {
+                return true;
+            }
+            if(!map.containsKey(sum[i] % k)) {
+                map.put(sum[i] % k, i);
+            }
+        }
+        return false;
+    }
+}
