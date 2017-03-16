@@ -70,3 +70,25 @@ public class Solution {
         return cand;
     }
 }
+
+
+// v4
+public class Solution {
+    public int majorityElement(int[] nums) {
+        // 3:49 - 3:53
+        int cand = 0, count = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(count == 0) {
+                cand = nums[i];
+                count++;
+            } else {
+                if(cand == nums[i]) {
+                    count++;
+                } else {
+                    count--;
+                }
+            }
+        }
+        return cand;
+    }
+}
