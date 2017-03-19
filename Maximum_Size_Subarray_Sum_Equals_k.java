@@ -68,3 +68,34 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        // 10:01 - 10:07
+        HashMap<Integer, Integer> map = new HashMap();
+        int n = nums.length;
+        int[] sum = new int[n];
+        
+        int res = 0;
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                sum[0] = nums[0];
+            } else {
+                sum[i] = nums[i] + sum[i - 1];
+            }
+        
+            if(sum[i] == k) {
+                res = Math.max(res, i + 1);
+            }
+            if(map.containsKey(sum[i] - k)) {
+                res = Math.max(res, i - map.get(sum[i] - k));
+            }
+            
+            if(map.containsKey(sum[i]) == false) {
+                map.put(sum[i], i);
+            }
+        }
+        return res;
+    }
+}

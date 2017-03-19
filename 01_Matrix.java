@@ -55,3 +55,56 @@ public class Solution {
         bfs(matrix, level1, visited);
     }
 }
+
+// v2
+public class Solution {
+    int m, n;
+    int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    public List<List<Integer>> updateMatrix(List<List<Integer>> matrix) {
+        // 11:04 - 11:18
+        m = matrix.size();
+        n = matrix.get(0).size();
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix.get(i).get(j) == 1) matrix.get(i).set(j, -1);
+            }
+        }
+        
+        int curlevel = 0;
+        while(needUpdate(matrix)) {
+            update(matrix, curlevel);
+            curlevel++;
+        }
+        
+        return matrix;
+    }
+    
+    public void update(List<List<Integer>> matrix, int curlevel) {
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix.get(i).get(j) != -1) {
+                    continue;
+                }
+                for(int[] dir : directions) {
+                    int x = i + dir[0], y = j + dir[1];
+                    if(x < 0 || y < 0 || x >= m || y >= n) continue;
+                    if(matrix.get(x).get(y) == curlevel) {
+                        matrix.get(i).set(j, curlevel + 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    public boolean needUpdate(List<List<Integer>> matrix) {
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix.get(i).get(j) == -1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}

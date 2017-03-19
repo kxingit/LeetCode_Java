@@ -48,3 +48,22 @@ public class Solution extends Reader4 {
         return index;
     }
 }
+
+// v3
+public class Solution extends Reader4 {
+    public int read(char[] buf, int n) {
+        // 10:50 - 10:56
+        int index = 0;
+        while(index < n) {
+        // while(true) { // also fine
+            char[] tmp = new char[4];
+            int curcount = read4(tmp);
+            for(int k = 0; k < curcount && index < n; k++) {
+                buf[index] = tmp[k];
+                index++;
+            }
+            if(curcount == 0 || index == n) break;
+        }
+        return index;
+    }
+}

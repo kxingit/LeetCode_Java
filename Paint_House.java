@@ -30,3 +30,28 @@ public class Solution {
         return Math.min(dp[m - 1][0], Math.min(dp[m - 1][1], dp[m - 1][2]));
     }
 }
+
+// v2
+public class Solution {
+    public int minCost(int[][] costs) {
+        // 10:14 - 10:21
+        int n = costs.length;
+        if(n == 0) return 0;
+        int[][] dp = new int[n][3];
+        for(int j = 0; j < 3; j++) {
+            dp[0][j] = costs[0][j];
+        }
+        
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j < 3; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+                for(int k = 0; k < 3; k++) {
+                    if(k == j) continue;
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][k] + costs[i][j]);
+                }
+            }
+        }
+        
+        return Math.min(dp[n - 1][2],Math.min(dp[n - 1][0], dp[n - 1][1]));
+    }
+}

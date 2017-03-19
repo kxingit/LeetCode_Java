@@ -23,3 +23,26 @@ public class Solution {
         return null;
     }
 }
+
+// v2
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        // 9:39 - 9:43
+        Stack<TreeNode> stack = new Stack();
+        boolean matched = false;
+        while(stack.size() > 0 || root != null) {
+            if(root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                if(matched) return root;
+                if(root == p) {
+                    matched = true;
+                }
+                root = root.right;
+            }
+        }
+        return null;
+    }
+}

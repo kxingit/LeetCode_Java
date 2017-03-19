@@ -28,3 +28,30 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        // 9:45 - 9:49
+        int l = 0, r = 0;
+        int n = s.length();
+        HashMap<Character, Integer> map = new HashMap(); 
+        
+        int res = 0;
+        for(; r < n; r++) {
+            char rightc = s.charAt(r);
+            map.put(rightc, map.getOrDefault(rightc, 0) + 1);
+            while(map.size() > k) {
+                char leftc = s.charAt(l);
+                map.put(leftc, map.get(leftc) - 1);
+                if(map.get(leftc) == 0) {
+                    map.remove(leftc);
+                }
+                l++;
+            }
+            res = Math.max(res, r - l + 1);
+        }
+        
+        return res;
+    }
+}
