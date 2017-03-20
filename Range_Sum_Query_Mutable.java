@@ -228,3 +228,77 @@ public class NumArray {
         return read(j) - read(i - 1);
     }
 }
+
+// v7
+public class NumArray {
+    // 2:38 - 2:44 - 2:46
+    int n;
+    int[] A;
+    int[] bit;
+    
+    public NumArray(int[] nums) {
+        n = nums.length;
+        A = new int[n];
+        bit = new int[n + 1];
+        for(int i = 0; i < n; i++) {
+            update(i, nums[i]);
+        }
+    }
+    
+    public void update(int i, int val) {
+        int diff = val - A[i];
+        for(int index = i + 1; index <= n; index += index & -index) {
+            bit[index] += diff;
+        }
+        A[i] = val;
+    }
+    
+    public int read(int i) {
+        int res = 0;
+        for(int index = i + 1; index > 0; index -= index & -index) {
+            res += bit[index];
+        }
+        return res;
+    }
+    
+    public int sumRange(int i, int j) {
+        return read(j) - read(i - 1);
+    }
+}
+
+// v8
+public class NumArray {
+    // 3:41 - 3:46
+    int n;
+    int[] bit;
+    int[] A;
+ 
+    public NumArray(int[] nums) {
+        n = nums.length;
+        bit = new int[n + 1];
+        A = new int[n];
+        for(int i = 0; i < n; i++) {
+            update(i, nums[i]);
+        }
+    }
+     
+    public void update(int i, int val) {
+        int diff = val - A[i];
+        A[i] = val;
+        for(int idx = i + 1; idx <= n; idx += idx & -idx) {
+            bit[idx] += diff;
+        }
+    }
+     
+    public int read(int i) {
+        int res = 0;
+        for(int idx = i + 1; idx > 0; idx -= idx & -idx) {
+            res += bit[idx];
+        }
+        return res;
+    }
+     
+    public int sumRange(int i, int j) {
+        return read(j) - read(i - 1);
+    }
+}
