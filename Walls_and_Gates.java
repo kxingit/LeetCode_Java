@@ -77,3 +77,38 @@ public class Solution {
         return;
     }
 }
+
+// v3
+public class Solution {
+    public static int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    public void wallsAndGates(int[][] rooms) {
+        // 10:05 - 10:13
+        int m = rooms.length;
+        if(m == 0) return ;
+        int n = rooms[0].length;
+        Queue<Point> q = new LinkedList();
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(rooms[i][j] == 0) {
+                    q.add(new Point(i, j));
+                }
+            }
+        }
+        
+        while(q.size() > 0) {
+            Point cur = q.poll();
+            int i = cur.x, j = cur.y;
+            for(int[] dir : directions) {
+                int x = i + dir[0], y = j + dir[1];
+                if(x < 0 || y < 0 || x >= m || y >= n) {
+                    continue;
+                }
+                if(rooms[x][y] == 2147483647) {
+                    rooms[x][y] = rooms[i][j] + 1;
+                    q.add(new Point(x, y));
+                }
+            }
+        }
+        return;
+    }
+}
