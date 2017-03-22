@@ -340,4 +340,40 @@ public class NumArray {
     }
 }
 
-
+// v10
+public class NumArray {
+    // 9:44 - 9:48 
+    int n;
+    int[] bit;
+    int[] A;
+ 
+    public NumArray(int[] nums) {
+        n = nums.length; // no "int" typo
+        bit = new int[n + 1];
+        A = new int[n];
+        
+        for(int i = 0; i < n; i++) {
+            update(i, nums[i]);
+        }
+    }
+    
+    public void update(int i, int val) {
+        int diff = val - A[i];
+        A[i] = val;
+        for(int idx = i + 1; idx <= n; idx += idx & -idx) {
+            bit[idx] += diff;
+        }
+    }
+    
+    public int read(int i) {
+        int res = 0;
+        for(int idx = i + 1; idx > 0; idx -= idx & -idx) {
+            res += bit[idx];
+        }
+        return res;
+    }
+    
+    public int sumRange(int i, int j) {
+        return read(j) - read(i - 1);
+    }
+}

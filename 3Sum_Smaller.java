@@ -27,3 +27,27 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public int threeSumSmaller(int[] nums, int target) {
+        // 8:53 - 8:55
+        int n = nums.length;
+        Arrays.sort(nums);
+        
+        int res = 0;
+        for(int i = 0; i < n; i++) {
+            int j = i + 1, k = n - 1;
+            while(j < k) {
+                if(nums[i] + nums[j] + nums[k] >= target) {
+                    k--;
+                } else {
+                    res += k - j;
+                    j++;
+                }
+            }
+        }
+        
+        return res;
+    }
+}

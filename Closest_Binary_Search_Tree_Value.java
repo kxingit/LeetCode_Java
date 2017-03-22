@@ -20,3 +20,26 @@ public class Solution {
         return cand;
     }
 }
+
+// v2
+public class Solution {
+    double diff = Long.MAX_VALUE;
+    int cand;
+    public int closestValue(TreeNode root, double target) {
+        // 9:18 - 9:22 - 9:24
+        if(Math.abs((double)root.val - target) < diff) {
+            diff = Math.abs((double)root.val - target);
+            cand = root.val;
+        }
+        
+        if(target > root.val && root.right != null) { 
+            closestValue(root.right, target);
+        } 
+        
+        if(target < root.val && root.left != null) { // cannot else
+            closestValue(root.left, target);
+        }
+        
+        return cand;
+    }
+}

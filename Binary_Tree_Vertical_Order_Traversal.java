@@ -91,3 +91,46 @@ public class Solution {
         label--;
     }
 }
+
+// v3
+public class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        // 9:01 - 9:14
+        List<List<Integer>> res = new ArrayList();
+        if(root == null) return res;
+        
+        Map<TreeNode, Integer> map = new LinkedHashMap();
+        Queue<TreeNode> q = new LinkedList();
+        
+        q.add(root);
+        map.put(root, 0); 
+        
+        int minlabel = 0, maxlabel = 0;
+        
+        while(q.size() > 0) {
+            TreeNode node = q.poll();
+            if(node.left != null) {
+                q.add(node.left);
+                map.put(node.left, map.get(node) - 1);
+                minlabel = Math.min(minlabel, map.get(node) - 1);
+            }
+            if(node.right != null) {
+                q.add(node.right);
+                map.put(node.right, map.get(node) + 1);
+                maxlabel = Math.max(maxlabel, map.get(node) + 1);
+            }
+        }
+        
+        int len = maxlabel - minlabel + 1;
+        for(int i = 0; i < len; i++) {
+            res.add(new ArrayList());
+        }
+        
+        for(TreeNode node : map.keySet()) {
+            int label = map.get(node) - minlabel;
+            res.get(label).add(node.val);
+        }
+        
+        return res;
+    }
+}

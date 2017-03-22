@@ -263,3 +263,72 @@ public class Solution {
         return res;
     }
 }
+
+
+// v5
+public class Solution {
+    // 9:33 - 9:40 - 9:42
+    int m, n;
+    static int[][] directions = {{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
+     
+    private int convert(int i, int j) {
+        return i * n + j;
+    }
+     
+    class UnionFind {
+        HashMap<Integer, Integer> father = new HashMap();
+         
+        UnionFind(int m, int n) {
+            for(int i = 0; i < m; i++) {
+                for(int j = 0; j < n; j++) {
+                    int id = convert(i, j);
+                    father.put(id, id);
+                }
+            }
+        }
+         
+        int find(int x) {
+            int fa = father.get(x);
+            while(fa != father.get(fa)) {
+                father.put(x, father.get(fa));
+                fa = father.get(fa);
+            }
+            return fa;
+        }
+         
+        void union(int x, int y) {
+            father.put(find(x), find(y));
+        }
+    }
+     
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        this.m = m;
+        this.n = n;
+        UnionFind uf = new UnionFind(m, n);
+        List<Integer> res = new ArrayList();
+        int[][] grid = new int[m][n];
+         
+        int count = 0;
+        for(int[] pos : positions) {
+            int i = pos[0], j = pos[1];
+            if(grid[i][j] != 0) {
+                res.add(count);
+                continue;
+            }
+            grid[i][j] = 1;
+            count++;
+            for(int[] dir : directions) {
+                int x = i + dir[0], y = j + dir[1];
+                if(x < 0 || y < 0 || x >= m || y >= n) continue;
+                if(grid[x][y] != 1) continue;
+                if(uf.find(convert(i, j)) != uf.find(convert(x, y))) {
+                    count--;
+                    uf.union(convert(i, j), convert(x, y));
+                }
+            }
+            res.add(count);
+        }
+         
+        return res;
+    }
+}
