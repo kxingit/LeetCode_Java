@@ -33,3 +33,86 @@ public class Solution {
         return rst;
     }
 }
+
+// v2
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        // 11:29 - 11:47
+        List<Integer> res = new ArrayList();
+        if(matrix.length == 0 || matrix[0].length == 0) return res;
+         
+        int m = matrix.length, n = matrix[0].length;
+         
+        int nLvl = (Math.min(m, n) + 1) / 2;
+         
+        for(int ilvl = 0; ilvl < nLvl; ilvl++) {
+            int lastRow = m - 1 - ilvl;
+            int lastCol = n - 1 - ilvl;
+            if(lastRow == ilvl) {
+                for(int j = ilvl; j <= lastCol; j++) {
+                    res.add(matrix[ilvl][j]);
+                }  
+            } else if(lastCol == ilvl) {
+                for(int i = ilvl; i <= lastRow; i++) {
+                    res.add(matrix[i][ilvl]);
+                }
+            } else {
+                for(int j = ilvl; j < lastCol; j++) {
+                    res.add(matrix[ilvl][j]);
+                }
+                for(int i = ilvl; i < lastRow; i++) {
+                    res.add(matrix[i][lastCol]);
+                }
+                for(int j = lastCol; j > ilvl; j--) {
+                    res.add(matrix[lastRow][j]);
+                }
+                for(int i = lastRow; i > ilvl; i--) {
+                    res.add(matrix[i][ilvl]);
+                }
+            }
+        }
+         
+        return res;
+    }
+}
+
+// v3
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        // 11:53 - 12:01
+        List<Integer> res = new ArrayList();
+        if(matrix.length == 0) return res;
+        int m = matrix.length, n = matrix[0].length;
+        if(n == 0) return res;
+        
+        int nLvl = (Math.min(m, n) + 1) / 2;
+        for(int ilvl = 0; ilvl < nLvl; ilvl++) {
+            int lastRow = m - 1 - ilvl;
+            int lastCol = n - 1 - ilvl;
+            if(lastRow == ilvl) {
+                for(int j = ilvl; j <= lastCol; j++) {
+                    res.add(matrix[ilvl][j]);
+                }
+            } else if(lastCol == ilvl) {
+                for(int i = ilvl; i <= lastRow; i++) {
+                    res.add(matrix[i][ilvl]);
+                }
+            } else {
+                for(int j = ilvl; j < lastCol; j++) {
+                    res.add(matrix[ilvl][j]);
+                }
+                for(int i = ilvl; i < lastRow; i++) {
+                    res.add(matrix[i][lastCol]);
+                }
+                for(int j = lastCol; j > ilvl; j--) {
+                    res.add(matrix[lastRow][j]);
+                }
+                for(int i = lastRow; i > ilvl; i--) {
+                    res.add(matrix[i][ilvl]);
+                }
+            }
+        }
+        
+        return res;
+    }
+}
