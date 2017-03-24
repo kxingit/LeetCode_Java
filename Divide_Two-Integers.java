@@ -35,3 +35,34 @@ public class Solution {
         }
     }
 }
+
+// v2
+public class Solution {
+    public int divide(int dividend, int divisor) {
+        // 9:36 - 9:42 - 9:46
+        long sign = (long)dividend * (long)divisor > 0 ? 1 : -1;
+        long d1 = Math.abs((long)dividend);
+        long d2 = Math.abs((long)divisor);
+        
+        long start = 0, end = d1; // starts from 0
+        while(start + 1 < end) {
+            long mid = start + (end - start) / 2;
+            if(d2 * mid <= d1) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+        if(end * d2 <= d1) {
+            if(end * sign > Integer.MAX_VALUE || end * sign < Integer.MIN_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+            return (int)end * (int)sign;
+        } else {
+            if(start * sign > Integer.MAX_VALUE || start * sign < Integer.MIN_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+            return (int)start * (int)sign;
+        }
+    }
+}

@@ -194,3 +194,130 @@ public class LRUCache {
 }
 
 
+// v4
+public class LRUCache {
+    // 9:48 - 10:00 - 10:06
+    class Node {
+        int key, val;
+        Node prev, next;
+        Node(int k, int v) {
+            key = k;
+            val = v;
+        }
+    }
+    HashMap<Integer, Node> map = new HashMap();
+    int capacity;
+    Node head, tail;
+ 
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        head = new Node(0, 0);
+        tail = new Node(0, 0);
+        head.next = tail; // !!
+        tail.prev = head;
+    }
+    
+    public int get(int key) {
+        if(map.containsKey(key) == false) {
+            return -1;
+        }
+        
+        Node node = map.get(key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev; // !!
+        
+        insert_to_tail(node);
+        
+        return node.val;
+    }
+    
+    public void put(int key, int value) {
+        if(get(key) != -1) {
+            // map.put(key, new Node(key, value));
+            map.get(key).val = value;
+            return;
+        }
+        
+        if(map.size() == capacity) {
+            map.remove(head.next.key);
+            head.next = head.next.next;
+            head.next.prev = head;
+            // map.remove(key); // wrong!
+        }
+        
+        Node node = new Node(key, value);
+        map.put(key, node);
+        insert_to_tail(node);
+    }
+    
+    public void insert_to_tail(Node node) {
+        node.prev = tail.prev;
+        node.next = tail;
+        tail.prev.next = node;
+        tail.prev = node;
+    }
+}
+
+
+// v5
+public class LRUCache {
+    // 10:09 - 10:16 - 10:22
+    class Node {
+        int key, val;
+        Node prev, next;
+        Node(int k, int v) {
+            key = k;
+            val = v;
+        }
+    }
+    int capacity;
+    Node tail, head;
+    HashMap<Integer, Node> map;
+ 
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        head = new Node(0, 0);
+        tail = new Node(0, 0);
+        head.next = tail;
+        tail.prev = head;
+        map = new HashMap();
+    }
+    
+    public int get(int key) {
+        if(map.containsKey(key) == false) {
+            return -1;
+        }
+        
+        Node node = map.get(key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        
+        insert_to_tail(node);
+        
+        return node.val;
+    }
+    
+    public void put(int key, int value) {
+        if(get(key) != -1) {
+            map.get(key).val = value;
+            return;
+        }
+        
+        Node node = new Node(key, value);
+        if(map.size() == capacity) {
+            map.remove(head.next.key); // !! key not val
+            head.next = head.next.next;
+            head.next.prev = head; // !!
+        }
+        
+        insert_to_tail(node);
+        map.put(key, node); // !!
+    }
+    
+    public void insert_to_tail(Node node) {
+        node.next = tail;
+        node.prev = tail.prev;
+        tail.prev.next = node;
+        tail.prev = node;
+    }
+}

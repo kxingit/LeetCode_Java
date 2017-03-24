@@ -116,3 +116,45 @@ public class Solution {
         return res;
     }
 }
+
+// v4
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        // 10:28 - 10:35 - 10:37
+        List<Integer> res = new ArrayList();
+        int m = matrix.length;
+        if(m == 0) return res;
+        int n = matrix[0].length;
+        
+        int nLvl = (Math.min(m, n) + 1) / 2;
+        
+        for(int ilvl = 0; ilvl < nLvl; ilvl++) {
+            int lastRow = m - ilvl - 1;
+            int lastCol = n - ilvl - 1;
+            if(lastRow == ilvl) { // one row left
+                for(int j = ilvl; j <= lastCol; j++) {
+                    res.add(matrix[lastRow][j]);
+                }
+            } else if(lastCol == ilvl) {
+                for(int i = ilvl; i <= lastRow; i++) {
+                    res.add(matrix[i][lastCol]);
+                }
+            } else {
+                for(int j = ilvl; j < lastCol; j++) {
+                    res.add(matrix[ilvl][j]);
+                }
+                for(int i = ilvl; i < lastRow; i++) {
+                    res.add(matrix[i][lastCol]);
+                }
+                for(int j = lastCol; j > ilvl; j--) {
+                    res.add(matrix[lastRow][j]);
+                }
+                for(int i = lastRow; i > ilvl; i--) {
+                    res.add(matrix[i][ilvl]);
+                }
+            }
+        }
+        
+        return res;
+    }
+}

@@ -130,3 +130,93 @@ public class Solution {
         }
     }
 }
+
+// v3
+public class Solution {
+    
+    class TrieNode {
+        // TrieNode root = new TrieNode();
+        TrieNode[] children = new TrieNode[26];
+        boolean hasWord;
+        
+        public void insert(String s) {
+            TrieNode node = this;
+            for(int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if(node.children[c - 'a'] == null) {
+                    node.children[c - 'a'] = new TrieNode();
+                }
+                node = node.children[c - 'a'];
+                if(i == s.length() - 1) {
+                    node.hasWord = true;
+                }
+            }
+        }
+        
+        public List<String> findPrefix(String s) {
+            List<String> res = new ArrayList();
+            StringBuffer solution = new StringBuffer(s);
+            TrieNode node = this;
+            for(int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if(node.children[c - 'a'] == null) {
+                    return res;
+                }
+                node = node.children[c - 'a'];
+            }
+            dfs(node, solution, res);
+            return res;
+        }
+        
+        public void dfs(TrieNode node, StringBuffer solution, List<String> res) {
+            if(node.hasWord == true) {
+                res.add(solution.toString());
+            }
+            for(int i = 0; i < 26; i++) {
+                if(node.children[i] != null) {
+                    solution.append((char)(i +'a'));
+                    dfs(node.children[i], solution, res);
+                    solution.setLength(solution.length() - 1);
+                }
+            }
+        }
+    }
+    
+    public List<List<String>> wordSquares(String[] words) {
+        // 11:20 - 11:56 - 12:24
+        
+        TrieNode root = new TrieNode();
+        for(String s : words) {
+            root.insert(s);
+        }
+        
+        List<List<String>> res = new ArrayList();
+        List<String> solution = new ArrayList();
+        for(String s : words) {
+            solution.add(s);
+            dfs(words, root, solution, res);
+            solution.remove(solution.size() - 1);
+        }
+        return res;
+    }
+    
+    public void dfs(String[] words, TrieNode root, List<String> solution, List<List<String>> result) {
+        if(solution.size() == words[0].length()) {
+            result.add(new ArrayList(solution));
+            return;
+        }
+        
+        StringBuffer prefix = new StringBuffer();
+        for(int i = 0; i < solution.size(); i++) {
+            int j = solution.size();
+            prefix.append(solution.get(i).charAt(j));
+        }
+        
+        List<String> nexts = root.findPrefix(prefix.toString());
+        for(String next : nexts) {
+            solution.add(next);
+            dfs(words, root, solution, result);
+            solution.remove(solution.size() - 1);
+        }
+    }
+}

@@ -51,3 +51,44 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        // 11:00 - 11:04
+        int m = n;
+        int[][] matrix = new int[n][n];
+        int count = 1;
+        
+        int nLvl = (Math.min(m, n) + 1) / 2;
+        
+        for(int ilvl = 0; ilvl < nLvl; ilvl++) {
+            int lastRow = m - ilvl - 1;
+            int lastCol = n - ilvl - 1;
+            if(lastRow == ilvl) { // one row left
+                for(int j = ilvl; j <= lastCol; j++) {
+                    matrix[lastRow][j] = count++;
+                }
+            } else if(lastCol == ilvl) {
+                for(int i = ilvl; i <= lastRow; i++) {
+                    matrix[i][lastCol] = count++;
+                }
+            } else {
+                for(int j = ilvl; j < lastCol; j++) {
+                    matrix[ilvl][j] = count++;
+                }
+                for(int i = ilvl; i < lastRow; i++) {
+                    matrix[i][lastCol] = count++;
+                }
+                for(int j = lastCol; j > ilvl; j--) {
+                    matrix[lastRow][j] = count++;
+                }
+                for(int i = lastRow; i > ilvl; i--) {
+                    matrix[i][ilvl] = count++;
+                }
+            }
+        }
+        
+        return matrix;
+    }
+}
