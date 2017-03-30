@@ -152,3 +152,76 @@ public class Solution {
         return edges.length == n - 1;
     }
 }
+
+// v5
+public class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        // 8:41 - 8:46
+        HashMap<Integer, HashSet<Integer>> graph = new HashMap();
+        for(int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<Integer>());
+        }
+        for(int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+        
+        Queue<Integer> q = new LinkedList();
+        HashSet<Integer> visited = new HashSet();
+        q.add(0);
+        visited.add(0);
+        
+        while(q.size() > 0) {
+            int curr = q.poll();
+            Set<Integer> neis = graph.get(curr);
+            for(Integer nei : neis) {
+                if(visited.contains(nei)) return false;
+                q.add(nei);
+                visited.add(nei);
+                graph.get(nei).remove(curr);
+            }
+        }
+        
+        return visited.size() == n;
+    }
+}
+
+// v6
+public class Solution {
+    // 8:49 - 8:54
+    class UnionFind {
+        HashMap<Integer, Integer> map = new HashMap();
+        UnionFind(int n) {
+            for(int i = 0; i < n; i++) {
+                map.put(i, i);
+            }
+        }
+        
+        int find(int x) {
+            int fa = map.get(x);
+            while(fa != map.get(fa)) {
+                fa = map.get(fa);
+                map.put(x, fa);
+            }
+            return fa;
+        }
+        
+        void union(int x, int y) {
+            if(find(x) != find(y)) {
+                map.put(find(x), find(y));
+            }
+        }
+    }
+    
+    public boolean validTree(int n, int[][] edges) {
+        UnionFind uf = new UnionFind(n);
+        for(int[] edge : edges) {
+            if(uf.find(edge[0]) == uf.find(edge[1])) {
+                return false;
+            } else {
+                uf.union(edge[0], edge[1]);
+            }
+        }
+        return edges.length == n - 1;
+    }
+}

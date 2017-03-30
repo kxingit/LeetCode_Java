@@ -79,3 +79,40 @@ public class Solution {
         return node;
     }
 }
+
+
+// v3
+public class Solution {
+    public ListNode plusOne(ListNode head) {
+        // 8:55 - 9:00
+        head = reverse(head);
+        
+        int carry = 1;
+        ListNode node = head;
+        ListNode pre = node;
+        
+        while(node != null) {
+            int curr = node.val + carry;
+            node.val = curr % 10;
+            carry = curr / 10;
+            pre = node;
+            node = node.next;
+        }
+        if(carry > 0) {
+            pre.next = new ListNode(1);
+        }
+        
+        return reverse(head);
+    }
+    
+    public ListNode reverse(ListNode head) {
+        ListNode newhead = null;
+        while(head != null) {
+            ListNode tmp = head.next;
+            head.next = newhead;
+            newhead = head;
+            head = tmp;
+        }
+        return newhead;
+    }
+}
