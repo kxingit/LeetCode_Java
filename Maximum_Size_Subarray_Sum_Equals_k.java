@@ -99,3 +99,58 @@ public class Solution {
         return res;
     }
 }
+
+// v4
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        // 9:20 - 9:23 // wrong, input has negative numbers
+        int l = 0, r = 0, n = nums.length;
+        int sum = 0;
+        int res = 0;
+        while(l < n && r < n) {
+            if(sum == k) {
+                res = Math.max(res, r - l + 1);
+                l++;
+            } else if(sum < k) {
+                if(r + 1 < n) {
+                    sum += nums[++r];
+                } else {
+                    break;
+                }
+            } else {
+                sum -= nums[l++];
+            }
+        }
+        return res;
+    }
+}
+
+
+// v5
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        // 9:27 - 9:32
+        int n = nums.length;
+        int[] sum = new int[n];
+        int res = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                sum[0] = nums[0];
+            } else {
+                sum[i] = sum[i - 1] + nums[i];
+            }
+            if(map.containsKey(sum[i] - k)) {
+                int len = i - map.get(sum[i] - k);
+                res = Math.max(res, len);
+            }
+            if(map.containsKey(sum[i]) == false) {
+                map.put(sum[i], i);
+            }
+        }
+        
+        return res;
+    }
+}

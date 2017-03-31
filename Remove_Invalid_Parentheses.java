@@ -177,3 +177,196 @@ public class Solution {
         sb.setLength(len);
     }
 }
+
+// v4
+// TLE: 96 / 125 test cases passed.
+public class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        // 9:35 - 9:49 - 10:01
+        List<String> res = new ArrayList();
+        StringBuffer solution = new StringBuffer();
+        
+        dfs(s, 0, 0, solution, res);
+        
+        if(res.size() == 0) res.add("");
+        
+        return res.stream().distinct().collect(Collectors.toList());
+        
+    }
+    
+    public void dfs(String s, int start, int netleft, StringBuffer solution, List<String> res) {
+        if(start == s.length()) {
+            if(netleft != 0) return;
+            if(res.size() == 0 || solution.length() == res.get(0).length()) {
+                res.add(solution.toString());
+            }
+            if(res.get(0).length() < solution.length()) {
+                res.clear();
+                res.add(solution.toString());
+            }
+            return;
+        }
+        
+        for(int i = start; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c != '(' && c != ')') {
+                solution.append(c);
+                // continue;
+                dfs(s, i + 1, netleft, solution, res);
+                solution.setLength(solution.length() - 1);
+            } else if(c == '(') {
+                solution.append(c);
+                dfs(s, i + 1, netleft + 1, solution, res);
+                solution.setLength(solution.length() - 1);
+                
+                dfs(s, i + 1, netleft, solution, res);
+            } else { // ')'
+                if(netleft <= 0) {
+                    dfs(s, i + 1, netleft, solution, res);
+                } else {
+                    solution.append(c);
+                    dfs(s, i + 1, netleft - 1, solution, res);
+                     solution.setLength(solution.length() - 1);
+                }
+            }
+        }
+    }
+}
+
+
+// v5: attempt to optimize
+// 86 / 125 test cases passed
+public class Solution {
+    int len = 0;
+    public List<String> removeInvalidParentheses(String s) {
+        // 9:35 - 9:49 - 10:01 - 10:19
+        int npairs = 0;
+        int l = 0;
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c == '(') {
+                l++;
+            } else if(c == ')') {
+                if(l == 0) {
+                    continue;
+                } else {
+                    l--;
+                    npairs++;
+                    len += 2;
+                }
+            } else {
+                len++;
+            }
+        }
+        
+        Set<String> res = new HashSet();
+        StringBuffer solution = new StringBuffer();
+        
+        dfs(s, 0, npairs, npairs, solution, res);
+        
+        if(res.size() == 0) res.add("");
+        
+        return new ArrayList<String>(res);
+        
+    }
+    
+    public void dfs(String s, int start, int nleft, int nright, StringBuffer solution, Set<String> res) {
+        if(nleft > nright) return;
+        if(nleft < 0 || nright < 0) return;
+        if(start == s.length()) {
+            if(solution.length() < len) return;
+            if(nleft != 0 || nright != 0) return;
+            
+            res.add(solution.toString());
+            
+            return;
+        }
+        
+        for(int i = start; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c != '(' && c != ')') {
+                solution.append(c);
+                // continue;
+                dfs(s, i + 1, nleft, nright, solution, res);
+                solution.setLength(solution.length() - 1);
+            } else if(c == '(') {
+                solution.append(c);
+                dfs(s, i + 1, nleft - 1, nright, solution, res);
+                solution.setLength(solution.length() - 1);
+                
+                dfs(s, i + 1, nleft, nright, solution, res);
+            } else { // ')'
+                dfs(s, i + 1, nleft, nright, solution, res);
+ 
+                solution.append(c);
+                dfs(s, i + 1, nleft, nright - 1, solution, res);
+                solution.setLength(solution.length() - 1);
+            }
+        }
+    }
+}
+
+// v6: key: no for loop
+public class Solution {
+    int len = 0;
+    public List<String> removeInvalidParentheses(String s) {
+        // 10:19 - 10:29
+        int npairs = 0;
+        int l = 0;
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c == '(') {
+                l++;
+            } else if(c == ')') {
+                if(l == 0) {
+                    continue;
+                } else {
+                    l--;
+                    npairs++;
+                    len += 2;
+                }
+            } else {
+                len++;
+            }
+        }
+       
+        Set<String> res = new HashSet();
+        StringBuffer solution = new StringBuffer();
+       
+        dfs(s, 0, npairs, npairs, solution, res);
+       
+        if(res.size() == 0) res.add("");
+       
+        return new ArrayList<String>(res);
+       
+    }
+   
+    public void dfs(String s, int start, int nleft, int nright, StringBuffer solution, Set<String> res) {
+        if(nleft > nright) return;
+        if(nleft < 0 || nright < 0) return;
+        if(start == s.length()) {
+            if(solution.length() < len) return;
+            if(nleft != 0 || nright != 0) return;
+           
+            res.add(solution.toString());
+           
+            return;
+        }
+       
+        int solutionLen = solution.length();
+        int i = start;
+        // for(int i = start; i < s.length(); i++) { // do not need the loop, cause there is select/no-select in dfs'
+            char c = s.charAt(i);
+            if(c != '(' && c != ')') {
+                dfs(s, i + 1, nleft, nright, solution.append(c), res);
+            } else if(c == '(') {
+                dfs(s, i + 1, nleft, nright, solution, res);
+                dfs(s, i + 1, nleft - 1, nright, solution.append(c), res);
+            } else { // ')'
+                dfs(s, i + 1, nleft, nright, solution, res);
+                dfs(s, i + 1, nleft, nright - 1, solution.append(c), res);
+            }
+        // }
+        solution.setLength(solutionLen);
+    }
+}

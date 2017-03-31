@@ -78,3 +78,39 @@ public class Solution {
     }
 }
 
+
+// v3
+public class Solution {
+    class TimeType {
+        int time;
+        int type;
+        TimeType(int time, int type) {
+            this.time = time;
+            this.type = type;
+        }
+    }
+    public int minMeetingRooms(Interval[] intervals) {
+        // 3:37 - 3:43
+        List<TimeType> times = new ArrayList();
+        for(Interval in : intervals) {
+            times.add(new TimeType(in.start, 1));
+            times.add(new TimeType(in.end, -1)); // end 
+        }
+        
+        times.sort((a, b) -> {
+            if(a.time == b.time) {
+                return a.type - b.type;
+            } else {
+                return a.time - b.time;
+            }
+        });
+        
+        int curr = 0, res = 0;
+        for(TimeType t : times) {
+            curr += t.type;
+            res = Math.max(res, curr);
+        }
+        
+        return res;
+    }
+}
