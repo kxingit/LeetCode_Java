@@ -75,3 +75,18 @@ public class Solution {
         }
     }
 }
+
+// v5
+public class Solution {
+    public void moveZeroes(int[] nums) {
+        // 11:26 - 11:27
+        int n = nums.length, j = 0;
+        for(int i = 0; i < n; i++) {
+            if(nums[i] != 0) {
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j++] = tmp;
+            }
+        }
+    }
+}

@@ -370,3 +370,44 @@ public class Solution {
         solution.setLength(solutionLen);
     }
 }
+
+// v7
+public class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        // 11:39 - 11:54
+        List<String> res = new ArrayList();
+        StringBuffer solution = new StringBuffer();
+        
+        dfs(s, 0, 0, solution, res);
+        
+        return new ArrayList(new HashSet(res));
+    }
+    
+    public void dfs(String s, int pos, int netleft, StringBuffer solution, List<String> res) {
+        if(netleft < 0) return;
+        if((res.size() == 0 || solution.length() == res.get(0).length()) && netleft == 0) {
+            res.add(solution.toString());
+        }
+        if(res.size() > 0 && solution.length() > res.get(0).length() && netleft == 0) {
+            res.clear();
+            res.add(solution.toString());
+        }
+        
+        if(pos == s.length()) return;
+        
+        char c = s.charAt(pos);
+        int solutionLen = solution.length();
+        if(c != '(' && c != ')') {
+            dfs(s, pos + 1, netleft, solution.append(c), res);
+        }
+        if(c == '(') {
+            dfs(s, pos + 1, netleft, solution, res);
+            dfs(s, pos + 1, netleft + 1, solution.append(c), res);
+        }
+        if(c == ')') {
+            dfs(s, pos + 1, netleft, solution, res);
+            dfs(s, pos + 1, netleft - 1, solution.append(c), res);
+        }
+        solution.setLength(solutionLen);
+    }
+}

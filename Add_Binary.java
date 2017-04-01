@@ -49,3 +49,40 @@ public class Solution {
         return res.toString();
     }
 }
+
+// v2
+public class Solution {
+    public String addBinary(String a, String b) {
+        // 11:58 - 12:02
+        int i = a.length() - 1, j = b.length() - 1;
+        StringBuffer res = new StringBuffer();
+        
+        int carry = 0;
+        while(i >= 0 && j >= 0) {
+            int curr = a.charAt(i--) - '0' + b.charAt(j--) - '0' + carry;
+            carry = curr / 2;
+            curr = curr % 2;
+            res.insert(0, (char)(curr + '0'));
+        }
+        
+        while(i >= 0) {
+            int curr = a.charAt(i--) - '0' + carry;
+            carry = curr / 2;
+            curr = curr % 2;
+            res.insert(0, (char)(curr + '0'));
+        }
+        
+        while(j >= 0) {
+            int curr = b.charAt(j--) - '0' + carry;
+            carry = curr / 2;
+            curr = curr % 2;
+            res.insert(0, (char)(curr + '0'));
+        }
+        
+        if(carry > 0) {
+            res.insert(0, '1');
+        }
+        
+        return res.toString();
+    }
+}

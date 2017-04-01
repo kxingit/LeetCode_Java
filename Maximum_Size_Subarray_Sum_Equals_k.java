@@ -154,3 +154,68 @@ public class Solution {
         return res;
     }
 }
+
+// v6
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        // 11:30 - 11:33 - 11:37
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1); // -1 position is 0
+        int n = nums.length;
+        int[] sum = new int[n];
+        int res = 0;
+        
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                sum[i] = nums[i];
+            } else {
+                sum[i] = sum[i - 1] + nums[i];
+            }
+            
+            if(map.containsKey(sum[i] - k)) {
+                int len = i - map.get(sum[i] - k);
+                res = Math.max(res, len);
+            } 
+            
+            if(!map.containsKey(sum[i])){
+                map.put(sum[i], i);
+            }
+        }
+        
+        return res;
+    }
+}
+
+// v7
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        // 11:30 - 11:33 - 11:37
+        HashMap<Integer, Integer> map = new HashMap<>();
+        // map.put(0, -1); // -1 position is 0
+        int n = nums.length;
+        int[] sum = new int[n];
+        int res = 0;
+        
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                sum[i] = nums[i];
+            } else {
+                sum[i] = sum[i - 1] + nums[i];
+            }
+            
+            if(sum[i] == k) {
+                res = Math.max(res, i + 1);
+            }
+            if(map.containsKey(sum[i] - k)) {
+                int len = i - map.get(sum[i] - k);
+                res = Math.max(res, len);
+            } 
+            
+            if(!map.containsKey(sum[i])){
+                map.put(sum[i], i);
+            }
+        }
+        
+        return res;
+    }
+}
