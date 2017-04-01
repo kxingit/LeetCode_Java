@@ -30,3 +30,25 @@ public class Solution extends Relation {
         return cand;
     }
 }
+
+// v2
+public class Solution extends Relation {
+    public int findCelebrity(int n) {
+        // 1:35 - 1:37
+        int cand = 0;
+        for(int i = 1; i < n; i++) {
+            if(knows(cand, i)) {
+                cand = i;
+            }
+        }
+        
+        for(int i = 0; i < n; i++) {
+            if(i == cand) continue;
+            if(knows(cand, i) || !knows(i, cand)) { // two conditions
+                return -1;
+            }
+        }
+        
+        return cand;
+    }
+}
