@@ -39,3 +39,89 @@ public class Codec {
         return root;
     }
 }  
+
+// v2
+public class Codec {
+    // 6:42 - 6:54
+    java.util.StringTokenizer st;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root == null) {
+            return "# ";
+        }
+        StringBuffer sb = new StringBuffer();
+        sb.append(root.val + " ");
+        sb.append(serialize(root.left));
+        sb.append(serialize(root.right));
+        
+        return sb.toString();
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data == null || data.length() == 0) {
+            return null;
+        }
+        st = new java.util.StringTokenizer(data, " ");
+        return deserial(st);
+    }
+    
+    public TreeNode deserial(java.util.StringTokenizer st) {
+        if(!st.hasMoreTokens()) {
+            return null;
+        }
+        String val = st.nextToken();
+        if(val.equals("#")) return null;
+        
+        TreeNode root = new TreeNode(Integer.parseInt(val));
+        root.left = deserial(st);
+        root.right = deserial(st);
+        
+        return root;
+    }
+}
+
+// v3
+public class Codec {
+    // 1:54 - 2:01
+    java.util.StringTokenizer st;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        String s = "";
+        if(root == null) {
+            s += "# ";
+            return s;
+        }
+        
+        s += root.val + " ";
+        s += serialize(root.left);
+        s += serialize(root.right);
+        
+        return s;
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        st = new java.util.StringTokenizer(data);
+        return deserial(st);
+    }
+    
+    public TreeNode deserial(java.util.StringTokenizer st) {
+        if(!st.hasMoreTokens()) {
+            return null;
+        }
+        
+        String val = st.nextToken();
+        if(val.equals("#")) {
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(Integer.parseInt(val));
+        root.left = deserial(st);
+        root.right = deserial(st);
+        
+        return root;
+    }
+}
+
+
