@@ -69,3 +69,36 @@ public class Solution {
         return false;
     }
 }
+
+// v3
+public class Solution {
+    public boolean isOneEditDistance(String s, String t) {
+        // 11:07 - 11:17
+        if(s.length() == t.length()) {
+            int count = 0;
+            for(int i = 0; i < s.length(); i++) {
+                if(s.charAt(i) != t.charAt(i)) count++;
+            }
+            return count == 1;
+        } else if(s.length() + 1 == t.length()) {
+            return isOneEdit(s, t);
+        } else if(t.length() + 1 == s.length()) {
+            return isOneEdit(t, s);
+        } else {
+            return false;
+        }
+    }
+     
+    public boolean isOneEdit(String s, String t) {
+        System.out.print(s + " " + t);
+        int i = 0, j = 0;
+        while(i < s.length() && j < t.length()) {
+            if(s.charAt(i) == t.charAt(j)) {
+                i++; j++;
+            } else {
+                j++;
+            }
+        }
+        return i == s.length(); // there is a i++ at the end
+    }
+}

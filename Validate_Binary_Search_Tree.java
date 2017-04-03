@@ -54,3 +54,15 @@ public class Solution {
         return true;
     }
 }
+
+// v3
+public class Solution {
+    long prev = Long.MIN_VALUE;
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) return true;
+        if(!isValidBST(root.left) || (long)root.val <= prev) return false;
+        prev = root.val;
+        if(!isValidBST(root.right)) return false;
+        return true;
+    }
+}

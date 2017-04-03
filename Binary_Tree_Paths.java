@@ -117,3 +117,56 @@ public class Solution {
         dfs(root.right, solution, result);
     }
 }
+
+// v6
+public class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        // 10:29 - 10:33
+        List<String> res = new ArrayList();
+        String solution = "";
+        
+        dfs(root, solution, res);
+        
+        return res;
+    }
+    
+    public void dfs(TreeNode root, String solution, List<String> res) {
+        if(root == null) return;
+        if(root.left == null && root.right == null) {
+            String tmp = solution + "->" + root.val;
+            res.add(tmp.substring(2, tmp.length()));
+        }
+        if(root.left != null) {
+            dfs(root.left, solution + "->" + root.val, res);
+        }
+        if(root.right != null) {
+            dfs(root.right, solution + "->" + root.val, res);
+        }
+    }
+}
+
+// v7 
+public class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        // 10:29 - 10:33 
+        List<String> res = new ArrayList();
+        String solution = "";
+        
+        dfs(root, solution, res);
+        
+        return res;
+    }
+    
+    public void dfs(TreeNode root, String solution, List<String> res) {
+        if(root == null) return;
+        if(!solution.equals("")) {
+            solution += "->";
+        }
+        solution += root.val;
+        if(root.left == null && root.right == null) {
+            res.add(solution);
+        }
+        dfs(root.left, solution, res);
+        dfs(root.right, solution, res);
+    }
+}

@@ -48,3 +48,43 @@ public class Solution {
         a[j] = tmp;
     }
 }
+
+// v3
+public class Solution {
+    public void sortColors(int[] nums) {
+        // 5:02 - 5:04 - 5:08
+        int n = nums.length;
+        int l = 0, r = n - 1;
+        for(int i = 0; i <= r; i++) { // '<='' !! 'r' could be 0 
+            if(nums[i] == 0) {
+                int tmp = nums[i];
+                nums[i] = nums[l];
+                nums[l++] = tmp;
+            } else if(nums[i] == 1) {
+                continue;
+            } else {
+                int tmp = nums[i];
+                nums[i] = nums[r];
+                nums[r--] = tmp;
+                i--;
+            }
+        }
+    }
+}
+
+// v4
+public class Solution {
+    public void sortColors(int[] nums) {
+        // 5:09 - 5:11
+        int[] count = new int[3];
+        for(int num : nums) {
+            count[num]++;
+        }
+        int ii = 0;
+        for(int j = 0; j < 3; j++) {
+            for(int i = 0; i < count[j]; i++) {
+                nums[ii++] = j;
+            }
+        }
+    }
+}

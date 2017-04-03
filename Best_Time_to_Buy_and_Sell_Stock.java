@@ -15,3 +15,18 @@ public class Solution {
         return profit;
     }
 }
+
+// v2
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // 3:27 - 3:29
+        if(prices.length == 0) return 0;
+        int currmin = prices[0];
+        int res = 0;
+        for(int i = 0; i < prices.length; i++) {
+            res = Math.max(res, prices[i] - currmin);
+            currmin = Math.min(currmin, prices[i]);
+        }
+        return res;
+    }
+}

@@ -93,3 +93,37 @@ public class Solution {
         return dp[m];
     }
 }
+
+// v5 DFS  TLE: 27 / 34 test cases passed.
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 3:35 - 3:45
+        for(int i = 0; i < s.length(); i++) {
+            if(!wordDict.contains(s.substring(0, i + 1))) continue;
+            if(i + 1 == s.length()) return true;
+            if(i + 1 < s.length() && wordBreak(s.substring(i + 1, s.length()), wordDict)) return true;
+        }
+        return false;
+    }
+}
+
+// v5
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 3:55 - 4:01
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        
+        for(int i = 0; i < n; i++) {
+            for(String word : wordDict) {
+                int len = word.length();
+                if(i + 1 >= len && s.substring(i + 1 - len, i + 1).equals(word)) {
+                    dp[i + 1] |= dp[i + 1 - len];
+                }
+            }
+        }
+        return dp[n];
+    }
+}
+

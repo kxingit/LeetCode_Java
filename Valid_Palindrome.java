@@ -30,3 +30,24 @@ public class Solution {
         return Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(j));
     }
 }
+
+// v2
+public class Solution {
+    public boolean isPalindrome(String s) {
+        // 4:47 - 4:52 - 5:59 Character.isLetterOrDight(c) Character.toUpperCase(c)
+        int l = 0, r = s.length() - 1;
+        while(l < r) {
+            if(Character.isLetterOrDigit(s.charAt(l)) == false) {
+                l++;  
+            } else if(Character.isLetterOrDigit(s.charAt(r)) == false) {
+                r--;
+            } else {
+                if(Character.toUpperCase(s.charAt(l)) != Character.toUpperCase(s.charAt(r))) {
+                    return false;
+                }
+                l++; r--; // !!
+            }
+        }
+        return true;
+    }
+}

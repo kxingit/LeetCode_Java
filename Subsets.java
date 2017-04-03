@@ -60,3 +60,25 @@ public class Solution {
     }
 }
 
+
+// v4
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        // 5:13 - 5:17
+        List<List<Integer>> res = new ArrayList();
+        List<Integer> solution = new ArrayList();
+        dfs(nums, 0, solution, res);
+        return res;
+    }
+    
+    public void dfs(int[] nums, int pos, List<Integer> solution, List<List<Integer>> res) {
+        if(pos == nums.length) {
+            res.add(new ArrayList(solution));
+            return;
+        }
+        dfs(nums, pos + 1, solution, res);
+        solution.add(nums[pos]);
+        dfs(nums, pos + 1, solution, res);
+        solution.remove(solution.size() - 1);
+    }
+}

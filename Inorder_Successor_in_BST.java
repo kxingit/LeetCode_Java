@@ -46,3 +46,24 @@ public class Solution {
         return null;
     }
 }
+
+// v3
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        // 11:34 - 11:37
+        Stack<TreeNode> stack = new Stack();
+        boolean isFound = false;
+        while(root != null || stack.size() > 0) {
+            if(root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                if(isFound) return root;
+                if(root == p) isFound = true;
+                root = root.right;
+            }
+        }
+        return null;
+    }
+}

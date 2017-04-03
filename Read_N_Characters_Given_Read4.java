@@ -67,3 +67,25 @@ public class Solution extends Reader4 {
         return index;
     }
 }
+
+// v4
+public class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    public int read(char[] buf, int n) {
+        // 11:22 - 11:27 - 11:30
+        int len = 0;
+        char[] buf4 = new char[4];
+        while(len < n) {
+            int currlen = read4(buf4);
+            for(int i = 0; i < currlen && len < n; i++) { // len < n
+                buf[len++] = buf4[i];
+            }
+            if(currlen < 4) break;
+        }
+        return len;
+    }
+}

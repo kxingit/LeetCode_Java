@@ -44,3 +44,18 @@ public class Solution {
 	return newhead;
   }
 }
+
+// v4
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        // 5:37 - 5:38
+        ListNode p = null;
+        while(head != null) {
+            ListNode tmp = head.next;
+            head.next = p;
+            p = head;
+            head = tmp;
+        }
+        return p;
+    }
+}
