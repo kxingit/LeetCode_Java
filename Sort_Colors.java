@@ -88,3 +88,24 @@ public class Solution {
         }
     }
 }
+
+// v5
+public class Solution {
+    public void sortColors(int[] nums) {
+        // 1:04 - 1:07
+        int n = nums.length;
+        int l = 0, r = n - 1;
+        for(int i = 0; i <= r; i++) { // <= r
+            if(nums[i] == 0) {
+                nums[i] = nums[l];
+                nums[l++] = 0;
+            } else if(nums[i] == 1) {
+                continue;
+            } else {
+                nums[i] = nums[r];
+                nums[r--] = 2;
+                i--;
+            }
+        }
+    }
+}

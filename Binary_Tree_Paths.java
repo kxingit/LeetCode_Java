@@ -170,3 +170,25 @@ public class Solution {
         dfs(root.right, solution, res);
     }
 }
+
+// v8
+public class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        // 9:56 - 10:01
+        List<String> res = new ArrayList();
+        String solution = "";
+        dfs(root, solution, res);
+        return res;
+    }
+    public void dfs(TreeNode root, String solution, List<String> res) {
+        if(root == null) return;
+        if(!solution.equals("")) solution += "->";
+        solution += root.val;
+        if(root.left == null && root.right == null) {
+            res.add(solution);
+        }
+        
+        dfs(root.left, solution, res);
+        dfs(root.right, solution, res);
+    }
+}

@@ -38,3 +38,88 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        // 3:24 - 3:30 - 3:36
+        List<int[]> edges = new ArrayList();
+        for(int[] b : buildings) {
+            edges.add(new int[]{b[0], -b[2]});
+            edges.add(new int[]{b[1], b[2]});
+        }
+        edges.sort((a, b) -> {
+           if(a[0] != b[0]) {
+               return a[0] - b[0];
+           } else {
+               return a[1] - b[1];
+           }
+        });
+        
+        PriorityQueue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+        
+        List<int[]> res = new ArrayList();
+        int prevh = 0;
+        pq.add(0); // !!!
+        for(int[] edge : edges) {
+            int h = edge[1];
+            if(h < 0) {
+                pq.add(-h);
+            } else {
+                pq.remove(h);
+            }
+            
+            h = pq.peek();
+            if(h != prevh) {
+                res.add(new int[]{edge[0], h});
+                prevh = h;
+            }
+        }
+        
+        return res;
+    }
+}
+
+// v3
+public class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        // 3:37 - 3:43 bug - 3:44
+        List<int[]> edges = new ArrayList();
+        for(int[] b : buildings) {
+            edges.add(new int[]{b[0], b[2]});
+            edges.add(new int[]{b[1], -b[2]});
+        }
+        
+        edges.sort((a, b) -> {
+           if(a[0] != b[0]) {
+               return a[0] - b[0];
+           } else {
+               return b[1] - a[1]; // make sure add first
+           }
+        });
+        
+        PriorityQueue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+        
+        pq.add(0);
+        int prevh = 0;
+        
+        List<int[]> res = new ArrayList();
+        
+        for(int[] edge : edges) {
+            int x = edge[0], h = edge[1];
+            if(h > 0) {
+                pq.add(h);
+            } else {
+                pq.remove(-h);
+            }
+            
+            h = pq.peek(); // peek() not poll()
+            if(h != prevh) {
+                res.add(new int[]{x, h});
+                prevh = h;
+            }
+        }
+        
+        return res;
+    }
+}

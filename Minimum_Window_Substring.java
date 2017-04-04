@@ -52,3 +52,49 @@ public class Solution {
         return true;
     }
 }
+
+// v2
+public class Solution {
+    public String minWindow(String s, String t) {
+        // 11:25 - 11:33 - 11:40 bug
+        if(s.equals("")) return "";
+        
+        HashMap<Character, Integer> map = new HashMap();
+        for(char c : t.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) - 1);
+        }
+        
+        int l = 0, r = 0;
+        
+        char c = s.charAt(0);
+        map.put(c, map.getOrDefault(c, 0) + 1);
+        
+        String res = "";
+        while(l < s.length() && r < s.length()) {
+            if(isCovered(map)) {
+                if(res.equals("") || res.length() > r - l + 1) { // bug: only output is in 'if'
+                    res = s.substring(l, r + 1);
+                } 
+                c = s.charAt(l);
+                map.put(c, map.getOrDefault(c, 0) - 1);
+                l++;
+            } else {
+                r++;
+                if(r >= s.length()) break;
+                c = s.charAt(r);
+                map.put(c, map.getOrDefault(c, 0) + 1);
+            }
+        }
+        
+        return res;
+    }
+    
+    public boolean isCovered(HashMap<Character, Integer> map) {
+        for(Character c : map.keySet()) {
+            if(map.get(c) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}

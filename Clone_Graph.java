@@ -127,3 +127,39 @@ public class Solution {
         return res;
     }
 }
+
+// vc class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode nd) {
+        // 3:07 - 3:13
+        if(nd == null) return null;
+        Queue<UndirectedGraphNode> q = new LinkedList();
+        Set<UndirectedGraphNode> visited = new HashSet();
+        q.add(nd);
+        visited.add(nd);
+        
+        List<UndirectedGraphNode> list = new ArrayList();
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap();
+        
+        while(q.size() > 0) {
+            UndirectedGraphNode node = q.poll();
+            list.add(node);
+            map.put(node, new UndirectedGraphNode(node.label));
+            List<UndirectedGraphNode> neis = node.neighbors;
+            for(UndirectedGraphNode nei : neis) {
+                if(visited.contains(nei)) continue;
+                visited.add(nei);
+                q.add(nei);
+            }
+        }
+        
+        for(UndirectedGraphNode node : list) {
+            List<UndirectedGraphNode> neis = node.neighbors;
+            for(UndirectedGraphNode nei : neis) {
+                map.get(node).neighbors.add(map.get(nei));
+            }
+        }
+        
+        return map.get(nd);
+    }
+}3
+
