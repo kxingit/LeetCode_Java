@@ -273,3 +273,46 @@ public class Trie {
         return node != null;
     }
 }
+
+// v5
+public class Trie {
+    // 3:38 - 3:43
+ 
+    /** Initialize your data structure here. */
+    boolean hasWord;
+    Trie[] children = new Trie[26];
+    public Trie() {
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        if(word.equals("")) {
+            hasWord = true;
+            return;
+        }
+        if(children[word.charAt(0) - 'a'] == null) {
+            children[word.charAt(0) - 'a'] = new Trie();
+        }
+        children[word.charAt(0) - 'a'].insert(word.substring(1, word.length()));
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        if(word.equals("")) {
+            return hasWord;
+        }
+        char c = word.charAt(0);
+        if(children[c - 'a'] == null) return false;
+        return children[c - 'a'].search(word.substring(1, word.length()));
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        if(prefix.equals("")) {
+            return true;
+        }
+        char c = prefix.charAt(0);
+        if(children[c - 'a'] == null) return false;
+        return children[c - 'a'].startsWith(prefix.substring(1, prefix.length()));
+    }
+}

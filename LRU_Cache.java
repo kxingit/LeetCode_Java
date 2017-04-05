@@ -321,3 +321,63 @@ public class LRUCache {
         tail.prev = node;
     }
 }
+
+// v6
+public class LRUCache {
+    // 2:46 - 2:57 - 3:23 bugs: need to update both map and list
+    class Node {
+        int key, value;
+        Node pre, next;
+        Node(int k, int v) {
+            key = k;
+            value = v;
+        }
+    }
+     
+    int capacity;
+    HashMap<Integer, Node> map = new HashMap();
+    Node head = new Node(0, 0);
+    Node tail = new Node(0, 0);
+ 
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        head.next = tail;
+        tail.pre = head;
+    }
+     
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        Node node = map.get(key);
+        node.pre.next = node.next;
+        node.next.pre = node.pre;
+         
+        insert_to_tail(node);
+         
+        return map.get(key).value;
+    }
+     
+    public void put(int key, int value) {
+        if(get(key) != -1) {
+           map.get(key).value = value;  
+           return;
+        }  
+         
+        Node node = new Node(key, value);
+        map.put(key, node);
+        insert_to_tail(node);
+ 
+         
+        if(map.size() > capacity) {
+            map.remove(head.next.key);
+            head.next.next.pre = head;
+            head.next = head.next.next;
+        }
+    }
+     
+    void insert_to_tail(Node node) {
+        tail.pre.next = node;
+        node.pre = tail.pre;
+        node.next = tail;
+        tail.pre = node;
+    }
+}

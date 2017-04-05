@@ -123,3 +123,45 @@ public class Solution {
         return res;
     }
 }
+
+// v4
+public class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        // 10:06 - 10:11
+        List<int[]> edges = new ArrayList();
+        for(int[] b : buildings) {
+            edges.add(new int[]{b[0], b[2]});
+            edges.add(new int[]{b[1], -b[2]});
+        }
+        
+        edges.sort((a, b) -> {
+           if(a[0] != b[0]) {
+               return a[0] - b[0];
+           } else {
+               return b[1] - a[1];
+           }
+        });
+        
+        List<int[]> res = new ArrayList();
+        PriorityQueue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+        pq.add(0);
+        int prevh = 0;
+        
+        for(int[] e : edges) {
+            int h = e[1];
+            if(h > 0) {
+                pq.add(h);
+            } else {
+                pq.remove(-h);
+            }
+            
+            h = pq.peek();
+            if(prevh != h) {
+                res.add(new int[]{e[0], h});
+                prevh = h;
+            }
+        }
+        
+        return res;
+    }
+}

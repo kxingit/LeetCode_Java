@@ -128,7 +128,8 @@ public class Solution {
     }
 }
 
-// vc class Solution {
+// v3
+class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode nd) {
         // 3:07 - 3:13
         if(nd == null) return null;
@@ -161,5 +162,34 @@ public class Solution {
         
         return map.get(nd);
     }
-}3
+}
 
+// v4
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        // 9:51 - 9:54
+        if(node == null) return null;
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap();
+        Queue<UndirectedGraphNode> q = new LinkedList();
+        q.add(node);
+        
+        while(q.size() > 0) {
+            UndirectedGraphNode nd = q.poll();
+            map.put(nd, new UndirectedGraphNode(nd.label));
+            List<UndirectedGraphNode> neis = nd.neighbors;
+            for(UndirectedGraphNode nei : neis) {
+                if(map.containsKey(nei)) continue;
+                q.add(nei);
+            }
+        }
+        
+        for(UndirectedGraphNode nd : map.keySet()) {
+            List<UndirectedGraphNode> neis = nd.neighbors;
+            for(UndirectedGraphNode nei : neis) {
+                map.get(nd).neighbors.add(map.get(nei));
+            }
+        }
+        
+        return map.get(node);
+    }
+}

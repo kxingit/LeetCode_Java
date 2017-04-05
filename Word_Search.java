@@ -215,3 +215,41 @@ public class Solution {
         return false;
     }
 }
+
+// v5
+public class Solution {
+    int m, n;
+    public boolean exist(char[][] board, String word) {
+        // 10:34 - 10:39 - 10:41
+        m = board.length;
+        if(m == 0) return false;
+        n = board[0].length;
+        
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                boolean[][] visited = new boolean[m][n];
+                if(dfs(board, i, j, visited, word, 0)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean dfs(char[][] board, int i, int j, boolean[][] visited, String word, int pos) {
+        if(pos == word.length()) return true;
+        if(i < 0 || j < 0 || i >= m || j >= n) return false;
+        if(visited[i][j]) return false;
+        if(word.charAt(pos) != board[i][j]) return false;
+        
+        visited[i][j] = true;
+        if(dfs(board, i + 1, j, visited, word, pos + 1)) return true;
+        if(dfs(board, i - 1, j, visited, word, pos + 1)) return true;
+        if(dfs(board, i, j + 1, visited, word, pos + 1)) return true;
+        if(dfs(board, i, j - 1, visited, word, pos + 1)) return true;
+        visited[i][j] = false;
+        
+        return false;
+    }
+}

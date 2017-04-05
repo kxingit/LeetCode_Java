@@ -26,3 +26,26 @@ public class Solution {
         return res == Integer.MAX_VALUE ? 0 : res;
     }
 }
+
+// v2
+public class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        // 12:30 - 12:34
+        int n = nums.length;
+        if(n == 0) return 0;
+        int l = 0, r = 0;
+        int sum = nums[0];
+        
+        int res = Integer.MAX_VALUE;
+        while(l < n && r < n) {
+            if(sum >= s) {
+                res = Math.min(res, r - l + 1);
+                sum -= nums[l++];
+            } else {
+                if(++r < n) sum += nums[r];
+            }
+        }
+        
+        return res == Integer.MAX_VALUE ? 0 : res;
+    }
+}

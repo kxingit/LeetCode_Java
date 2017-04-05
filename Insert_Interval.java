@@ -82,3 +82,38 @@ public class Solution {
         return res;
     }
 }
+
+// v4
+public class Solution {
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        // 12:44 - 12:48 - 1:02 bug: size changes
+        int n = intervals.size();
+        
+        boolean inserted = false;
+        for(int i = 0; i < n; i++) {
+            Interval in = intervals.get(i);
+            if(in.start >= newInterval.start) {
+                intervals.add(i, newInterval);
+                inserted = true;
+                break;
+            }
+        }
+        if(!inserted) intervals.add(newInterval); // !!
+        
+        List<Interval> res = new ArrayList();
+        res.add(intervals.get(0));
+        for(int i = 1; i < n + 1; i++) { // !!! 'n + 1' not n
+            Interval curr = res.get(res.size() - 1);
+            Interval next = intervals.get(i);
+                System.out.print(curr.end + " " + next.start);
+            if(curr.end < next.start) {
+                res.add(next);
+            } else {
+                res.remove(res.size() - 1);
+                res.add(new Interval(curr.start, Math.max(curr.end, next.end)));
+            }
+        }
+        
+        return res;
+    }
+}
