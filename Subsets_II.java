@@ -47,3 +47,29 @@ public class Solution {
         }
     }
 }
+
+// v3
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        // 4:25 - 4:34 - 4:40
+        List<List<Integer>> res = new ArrayList();
+        List<Integer> solution = new ArrayList();
+        Arrays.sort(nums); // !!
+        dfs(nums, 0, solution, res);
+        return res;
+    }
+    
+    public void dfs(int[] nums, int pos, List<Integer> solution, List<List<Integer>> res) {
+        // if(pos == nums.length) { // wrong
+        //     res.add(new ArrayList(solution));
+        //     return;
+        // }
+        res.add(new ArrayList(solution));
+        for(int i = pos; i < nums.length; i++) {
+            if(i > pos && nums[i] == nums[i - 1]) continue;
+            solution.add(nums[i]);
+            dfs(nums, i + 1, solution, res);
+            solution.remove(solution.size() - 1);
+        }
+    }
+}
