@@ -27,3 +27,39 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public int hIndex(int[] citations) {
+        // 5:27 - 5:47 box int!
+        int n = citations.length;
+        Integer[] A = new Integer[n];
+        for(int i = 0; i < citations.length; i++) A[i] = new Integer(citations[i]); // box int
+        
+        Arrays.sort(A, Collections.reverseOrder());
+        
+        int i = 0;
+        for(; i < n; i++) {
+            if(i >= A[i]) return i;
+        }
+        return i;
+    }
+}
+
+// v3
+public class Solution {
+    public int hIndex(int[] citations) {
+        // 5:27 - 5:47 box int!
+        int n = citations.length;
+        Integer[] A = new Integer[n];
+        for(int i = 0; i < citations.length; i++) A[i] = new Integer(citations[i]); // box int
+        
+        Arrays.sort(A, Collections.reverseOrder());
+        
+        int i = 0;
+        for(; i < n; i++) {
+            if(i >= A[i]) break;
+        }
+        return i;
+    }
+}

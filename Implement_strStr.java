@@ -97,3 +97,25 @@ public class Solution {
         return -1;
     }
 }
+
+// v6
+public class Solution {
+    public int strStr(String s, String t) {
+        // 10:31 - 10:34
+        int m = s.length(), n = t.length();
+        if(n == 0) return 0;
+        
+        for(int i = 0; i < m; i++) {
+            if(i + n > m) break; // check this
+            for(int j = 0; j < n; j++) {
+                if(s.charAt(i + j) != t.charAt(j)) {
+                    break;
+                } else {
+                    if(j == n - 1) return i;
+                }
+            }
+        }
+        
+        return -1;
+    }
+}

@@ -46,3 +46,33 @@ public class Solution {
         return result;
     }
 }
+
+// v3
+public class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        // 10:15 - 10:18
+        List<List<Integer>> res = new ArrayList();
+        if(root == null) return res;
+        
+        Queue<TreeNode> q = new LinkedList();
+        q.add(root);
+        
+        while(q.size() > 0) {
+            int n = q.size();
+            List<Integer> level = new ArrayList();
+            for(int i = 0; i < n; i++) {
+                TreeNode node = q.poll();
+                level.add(node.val);
+                if(node.left != null) {
+                    q.add(node.left);
+                }
+                if(node.right != null) {
+                    q.add(node.right);
+                }
+            }
+            res.add(new ArrayList(level));
+        }
+        
+        return res;
+    }
+}

@@ -50,3 +50,24 @@ public class Solution {
         return dp[n][S + 1000];
     }
 }
+
+// v3
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        // 10:54 - 11:03
+        HashMap<Integer, Integer> map = new HashMap();
+        map.put(0, 1);
+        
+        for(int num : nums) {
+            HashMap<Integer, Integer> newmap = new HashMap();
+            for(int sum : map.keySet()) {
+                newmap.put(sum + num, newmap.getOrDefault(sum + num, 0) + map.get(sum));
+                newmap.put(sum - num, newmap.getOrDefault(sum - num, 0) + map.get(sum));
+            }
+            map = newmap;
+        }
+        
+        return map.getOrDefault(S, 0);
+    }
+}
+
