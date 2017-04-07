@@ -34,3 +34,22 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        // 2:13 - 2:15
+        HashMap<Integer, Integer> map = new HashMap();
+        int[] res = new int[2];
+        for(int i = 0; i < nums.length; i++) {
+            int gap = target - nums[i];
+            if(map.containsKey(gap)) {
+                res[0] = map.get(gap);
+                res[1] = i;
+                return res;
+            }
+            map.put(nums[i], i);
+        }
+        return res;
+    }
+}

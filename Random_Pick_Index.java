@@ -97,3 +97,34 @@ public class Solution {
         return res;
     }
 }
+
+
+// v5
+public class Solution {
+    // 9:43 - 9:47
+    int[] nums;
+    Random r;
+ 
+    public Solution(int[] nums) {
+        this.nums = nums;
+        r = new Random();
+    }
+    
+    public int pick(int target) {
+        int res = 0;
+        int count = 0;
+        
+        for(int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if(num == target) {
+                count++;
+                if(r.nextInt(count) == 0) {
+                    res = i;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+

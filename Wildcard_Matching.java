@@ -65,3 +65,30 @@ public class Solution {
         return dp[m][n];
     }
 }
+
+// v3
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        // 10:07 - 10:14
+        int m = s.length(), n = p.length();
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        dp[0][0] = true;
+        for(int j = 0; j < n; j++) { // empty s
+            if(p.charAt(j) == '*') {
+                dp[0][j + 1] = dp[0][j];
+            }
+        }
+        
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(s.charAt(i) == p.charAt(j) || p.charAt(j) == '?') {
+                    dp[i + 1][j + 1] = dp[i][j];
+                } else if(p.charAt(j) == '*') { // must specify '*'
+                    dp[i + 1][j + 1] = dp[i + 1][j] || dp[i][j] || dp[i][j + 1];
+                }
+            }
+        }
+        
+        return dp[m][n];
+    }
+}

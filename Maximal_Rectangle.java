@@ -42,3 +42,106 @@ public class Solution {
         return res;
     }
 }
+
+// v2
+public class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        // 10:31 - 10:48
+        int m = matrix.length;
+        if(m == 0) return 0;
+        int n = matrix[0].length;
+        
+        int[][] A = new int[m][n];
+        
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix[i][j] == '0') continue;
+                if(i == 0) {
+                    A[i][j] = 1;
+                } else {
+                    A[i][j] = A[i - 1][j] + 1;
+                }
+            }
+        }
+        
+        int res = 0;
+        for(int[] row : A) {
+            int maxrec = getMaxRec(row);
+            res = Math.max(res, maxrec);
+        }
+        
+        return res;
+    }
+    
+    public int getMaxRec(int[] nums) {
+        int n = nums.length;
+        int[] A = new int[n + 2];
+        for(int i = 0; i < n; i++) {
+            A[i + 1] = nums[i];
+        }
+        
+        Stack<Integer> stack = new Stack();
+        int res = 0;
+        for(int i = 0; i < A.length; i++) {
+            while(stack.size() > 0 && A[stack.peek()] >= A[i]) {
+                int h = A[stack.pop()];
+                int start = stack.size() > 0 ? stack.peek() : -1;
+                int w = i - start - 1;
+                res = Math.max(res, w * h);
+            }
+            stack.push(i);
+        }
+        
+        return res;
+    }
+}
+
+// v3
+public class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        // 10:31 - 10:48
+        int m = matrix.length;
+        if(m == 0) return 0;
+        int n = matrix[0].length;
+        
+        int[][] A = new int[m][n];
+        
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix[i][j] == '0') continue;
+                if(i == 0) {
+                    A[i][j] = 1;
+                } else {
+                    A[i][j] = A[i - 1][j] + 1;
+                }
+            }
+        }
+        
+        int res = 0;
+        for(int[] row : A) {
+            int maxrec = getMaxRec(row);
+            res = Math.max(res, maxrec);
+        }
+        
+        return res;
+    }
+    
+    public int getMaxRec(int[] nums) {
+        int n = nums.length;
+        
+        Stack<Integer> stack = new Stack();
+        int res = 0;
+
+        for(int i = 0; i <= n; i++) {
+            int currh = i == n ? 0 : nums[i];
+            while(stack.size() > 0 && nums[stack.peek()] >= currh) { // nums[stack.peek()] is height, not stack.peek()
+                int h = nums[stack.pop()];
+                int w = stack.size() == 0 ? i : i - stack.peek() - 1;
+                res = Math.max(res, w * h);
+            }
+            stack.push(i);
+        }
+        
+        return res;
+    }
+}

@@ -63,3 +63,24 @@ public class Solution {
         return i;
     }
 }
+
+// v4
+public class Solution {
+    public int hIndex(int[] citations) {
+        // 9:02 - 9:04
+        int n = citations.length;
+        Integer[] A = new Integer[n];
+        for(int i = 0; i < n; i++) {
+            A[i] = citations[i];
+        }
+        
+        Arrays.sort(A, Collections.reverseOrder());
+        
+        int i = 0;
+        for(; i < n; i++) {
+            if(i + 1 > A[i]) break;
+        }
+        
+        return i;
+    }
+}

@@ -73,3 +73,21 @@ public class Solution {
         return false;
     }
 }
+
+// v5
+public class Solution {
+    public boolean increasingTriplet(int[] nums) {
+        // 9:47 - 9:48
+        int min = Integer.MAX_VALUE, mid = min;
+        for(int num : nums) {
+            if(num <= min) {
+                min = num;
+            } else if(num <= mid) {
+                mid = num;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+}

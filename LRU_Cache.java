@@ -381,3 +381,65 @@ public class LRUCache {
         tail.pre = node;
     }
 }
+
+// v7
+public class LRUCache {
+    // 1:58 - 2:06
+    class Node {
+        int key, value;
+        Node prev, next;
+        Node(int k, int v) {
+            key = k;
+            value = v;
+        }
+    }
+    HashMap<Integer, Node> map = new HashMap();
+    Node head = new Node(0, 0);
+    Node tail = new Node(0, 0);
+    int capacity;
+ 
+    public LRUCache(int capacity) {
+        head.next = tail;
+        tail.prev = head;
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) {
+        if(map.containsKey(key) == false) {
+            return -1;
+        }
+        
+        Node node = map.get(key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        
+        insert_to_tail(node);
+        
+        return node.value;
+    }
+    
+    public void put(int key, int value) {
+        if(get(key) != -1) {
+            map.get(key).value = value;
+            return;
+        } 
+        
+        Node node = new Node(key, value);
+        map.put(key, node);
+        insert_to_tail(node);
+        
+        if(map.size() > capacity) {
+            node = head.next;
+            map.remove(node.key);
+            head.next = node.next;
+            node.next.prev = head;
+        }
+    }
+    
+    public void insert_to_tail(Node node) {
+        node.next = tail;
+        node.prev = tail.prev;
+        tail.prev = node;
+        node.prev.next = node;
+    }
+}

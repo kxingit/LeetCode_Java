@@ -199,3 +199,53 @@ public class Solution {
         return new String(chars);
     }
 }
+
+// v5
+public class Solution {
+    Set<String> dict = new HashSet();
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        // 9:20 - 9:29 - 9:42
+        for(String w : wordList) dict.add(w);
+        
+        Queue<String> q = new LinkedList();
+        q.add(beginWord);
+        
+        int res = 1;
+        
+        while(q.size() > 0) {
+            int n = q.size();
+            res++;
+            for(int i = 0; i < n; i++) {
+                String currw = q.poll();
+                List<String> nexts = genNexts(currw);
+                for(String next : nexts) {
+                    q.add(next);
+                    if(next.equals(endWord)) {
+                        return res;
+                    }
+                }
+            }
+        }
+        
+        return 0;
+    }
+    
+    public List<String> genNexts(String s) {
+        List<String> res = new ArrayList();
+        
+        char[] chars = s.toCharArray();
+        for(int i = 0; i < chars.length; i++) {
+            char originali = chars[i];
+            for(char c = 'a'; c <= 'z'; c++) {
+                if(c == chars[i]) continue;
+                chars[i] = c;
+                String next = new String(chars);
+                if(!dict.contains(next)) continue;
+                dict.remove(next);
+                res.add(next);
+            }
+            chars[i] = originali; // need to restore chars!!
+        }
+        return res;
+    }
+}
