@@ -38,3 +38,41 @@ public class Solution {
         return true;
     }
 }
+
+// v2
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        // 2:56 -3:02
+        List<Integer> res = new ArrayList();
+        
+        int[] count = new int[26];
+        int[] pcount = new int[26];
+        int k = p.length();
+        int len = 0;
+        int l = 0;
+        
+        for(int i = 0; i < p.length(); i++) {
+            pcount[p.charAt(i) - 'a']++;
+        }
+        
+        for(int i = 0; i < s.length(); i++) {
+            len++;
+            count[s.charAt(i) - 'a']++;
+            if(len > k) {
+                count[s.charAt(l++) - 'a']--;
+            }
+            if(isAna(count, pcount)) {
+                res.add(l);
+            }
+        }
+        
+        return res;
+    }
+    
+    public boolean isAna(int[] c1, int[] c2) {
+        for(int i = 0; i < c1.length; i++) {
+            if(c1[i] != c2[i]) return false;
+        }
+        return true;
+    }
+}

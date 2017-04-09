@@ -124,4 +124,147 @@ public class Codec {
     }
 }
 
+// v4
+public class Codec {
+    // 10:46 - 12:26
+ 
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root == null) return "# ";
+        String res = "";
+        res += root.val + " ";
+        res += serialize(root.left);
+        res += serialize(root.right);
+        return res;
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] sa = data.split(" ");
+        System.out.print(Arrays.toString(sa));
+        return deserial(sa, new int[]{0});
+    }
+    
+    public TreeNode deserial(String[] sa, int[] i) { // need "reference" variable
+        if(sa[i[0]].equals("#")) {
+            i[0]++;
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(Integer.parseInt(sa[i[0]]));
+        i[0]++;
+        root.left = deserial(sa, i);
+        root.right = deserial(sa, i);
+        
+        return root;
+    }
+}
 
+// v5
+public class Codec {
+    // 12:46 － 1:07
+    int i = 0;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root == null) return "# ";
+        String res = "";
+        res += root.val + " ";
+        res += serialize(root.left);
+        res += serialize(root.right);
+        return res;
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] sa = data.split(" ");
+        System.out.print(Arrays.toString(sa));
+        i = 0;
+        return deserial(sa);
+    }
+    
+    public TreeNode deserial(String[] sa) {
+        if(sa[i].equals("#")) {
+            i++;
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(Integer.parseInt(sa[i]));
+        i++;
+        root.left = deserial(sa);
+        root.right = deserial(sa);
+        
+        return root;
+    }
+}
+
+
+// v6: TLE
+public class Codec {
+    // 1:09 - 1:13
+    int i = 0;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        String res = "";
+        if(root == null) return "#,";
+        
+        res += root.val + ",";
+        res += serialize(root.left);
+        res += serialize(root.right);
+        
+        i = 0;
+        
+        return res;
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] sa = data.split(",");
+        if(sa[i].equals("#")) {
+            i++;
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(Integer.parseInt(sa[i]));
+        i++;
+        root.left = deserialize(data);
+        root.right = deserialize(data);
+        
+        return root;
+    }
+}
+
+// v7
+public class Codec {
+    // 1:09 - 1:13 - 1:15
+    int i = 0;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        String res = "";
+        if(root == null) return "#,";
+        
+        res += root.val + ",";
+        res += serialize(root.left);
+        res += serialize(root.right);
+        
+        return res;
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        return deserialize(data.split(","));
+    }
+    
+    public TreeNode deserialize(String[] sa) {
+        if(sa[i].equals("#")) {
+            i++;
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(Integer.parseInt(sa[i]));
+        i++;
+        root.left = deserialize(sa);
+        root.right = deserialize(sa);
+        
+        return root;
+    }
+}
