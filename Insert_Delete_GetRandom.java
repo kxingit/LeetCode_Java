@@ -124,43 +124,44 @@ public class RandomizedSet {
 
 // v4
 public class RandomizedSet {
-    // 9:26 - 9:41
-    List<Integer> list = new ArrayList();
+    // 9:19 - 9:23
     HashMap<Integer, Integer> map = new HashMap();
+    List<Integer> list = new ArrayList();
     Random r = new Random();
-
+     
     /** Initialize your data structure here. */
     public RandomizedSet() {
-        
+         
     }
-    
+     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) {
         if(map.containsKey(val)) return false;
-        
+         
         list.add(val);
         map.put(val, list.size() - 1);
+         
         return true;
     }
-    
+     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
         if(map.containsKey(val) == false) return false;
-        
+         
         int idx = map.get(val);
-        
+         
         int lastidx = list.size() - 1;
         int lastval = list.get(lastidx);
-        
-        list.set(idx, lastval); // insert, then delete -- delete the last element
+         
+        list.set(idx, lastval);
         map.put(lastval, idx);
-        
-        list.remove(lastidx); 
+         
+        list.remove(lastidx);
         map.remove(val);
-        
+         
         return true;
     }
-    
+     
     /** Get a random element from the set. */
     public int getRandom() {
         return list.get(r.nextInt(list.size()));

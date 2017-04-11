@@ -127,3 +127,47 @@ public class Solution {
     }
 }
 
+// v6 LTE
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 2:49 - 2:52
+        return dfs(s, 0, wordDict);
+    }
+    
+    public boolean dfs(String s, int pos, List<String> dict) {
+        if(pos == s.length()) {
+            return true;
+        }
+        
+        for(int i = pos; i < s.length(); i++) {
+            String next = s.substring(pos, i + 1);
+            if(!dict.contains(next)) continue;
+            if(dfs(s, i + 1, dict)) return true;
+        }
+        
+        return false;
+    }
+}
+
+// v7
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 2:53 - 3:11
+        int m = s.length();
+        boolean[] dp = new boolean[m + 1];
+        dp[0] = true;
+        
+        for(int i = 0; i < s.length(); i++) {
+            for(String w : wordDict) {
+                int len = w.length();
+                if(i - len + 1 >= 0) {
+                    if(w.equals(s.substring(i - len + 1, i + 1))) {
+                        dp[i + 1] |= dp[i - len + 1];
+                    }
+                }
+            }
+        }
+        
+        return dp[m];
+    }
+}

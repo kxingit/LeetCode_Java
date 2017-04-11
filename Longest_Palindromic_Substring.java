@@ -140,61 +140,12 @@ public class Solution {
 // v4
 public class Solution {
     public String longestPalindrome(String s) {
-        // 8:09 - 8:17 - 8:55
+        // 9:25 - 9:28
         int n = s.length();
         String res = "";
-        for(int i = 0; i < n; i++) {
-            String evenpal = evenPal(s, i);
-            if(evenpal.length() > res.length()) {
-                res = evenpal;
-            }
-            String oddpal = oddPal(s, i);
-            if(oddpal.length() > res.length()) {
-                res = oddpal;
-            }
-        }
-        return res;
-    }
-    
-    public String evenPal(String s, int mid) {
-        int i = mid, j = mid + 1;
-        int len = 0;
-        while(i >= 0 && j < s.length()) {
-            if(s.charAt(i) == s.charAt(j)) {
-                len++;
-            } else {
-                break;
-            }
-            i--; j++;
-        }
-        if(len == 0) return "";
-        return s.substring(mid + 1 - len, mid + len + 1);
-    }
-    
-    public String oddPal(String s, int mid) {
-        int i = mid - 1, j = mid + 1;
-        int len = 0;
-        while(i >= 0 && j < s.length()) {
-            if(s.charAt(i) == s.charAt(j)) {
-                len++;
-            } else {
-                break;
-            }
-            i--; j++;
-        }
-        if(len == 0) return s.substring(mid, mid + 1);
-        return s.substring(mid - len, mid + len + 1);
-    }
-}
-
-// v5
-public class Solution {
-    public String longestPalindrome(String s) {
-        // 8:57 - 9:05
-        String res = "";
-        for(int k = 0; k < s.length(); k++) {
+        for(int k = 0; k < n; k++) {
             int i = k, j = k;
-            while(i >= 0 && j < s.length()) {
+            while(i >= 0 && j < n) {
                 if(s.charAt(i) == s.charAt(j)) {
                     if(res.length() < j - i + 1) {
                         res = s.substring(i, j + 1);
@@ -207,18 +158,55 @@ public class Solution {
             
             i = k;
             j = k + 1;
-            while(i >= 0 && j < s.length()) {
+            while(i >= 0 && j < n) {
                 if(s.charAt(i) == s.charAt(j)) {
                     if(res.length() < j - i + 1) {
                         res = s.substring(i, j + 1);
                     }
                 } else {
-                    break; // !!
+                    break;
                 }
                 i--; j++;
             }
         }
-        
         return res;
+    }
+}
+
+// v5
+public class Solution {
+    public String longestPalindrome(String s) {
+        // 9:25 - 9:28 - 9:30 optimization
+        int n = s.length();
+        int start = 0, end = 0;
+        for(int k = 0; k < n; k++) {
+            int i = k, j = k;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(end - start < j - i + 1) {
+                        start = i;
+                        end = j + 1;
+                    }
+                } else {
+                    break;
+                }
+                i--; j++;
+            }
+            
+            i = k;
+            j = k + 1;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(end - start < j - i + 1) {
+                        start = i;
+                        end = j + 1;
+                    }
+                } else {
+                    break;
+                }
+                i--; j++;
+            }
+        }
+        return s.substring(start, end);
     }
 }

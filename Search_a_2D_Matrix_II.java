@@ -25,3 +25,26 @@ public class Solution {
 	return false;
   }
 }
+
+// v2
+public class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // 10:25 - 10:27
+        int m = matrix.length;
+        if(m == 0) return false;
+        int n = matrix[0].length;
+        
+        int i = m - 1, j = 0;
+        while(i >= 0 && j < n) {
+            if(target == matrix[i][j]) {
+                return true;
+            } else if(target < matrix[i][j]) {
+                i--;
+            } else {
+                j++;
+            }
+        }
+        
+        return false;
+    }
+}

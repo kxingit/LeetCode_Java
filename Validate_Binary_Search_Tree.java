@@ -66,3 +66,24 @@ public class Solution {
         return true;
     }
 }
+
+// v4
+public class Solution {
+    long prev = Long.MIN_VALUE;
+    public boolean isValidBST(TreeNode root) {
+        // 3:45 - 3:48
+        if(root == null) return true;
+        if(!isValidBST(root.left)) {
+            return false;
+        }
+        
+        if((long)root.val <= prev) return false;
+        prev = (long)root.val;
+        
+        if(!isValidBST(root.right)) {
+            return false;
+        }
+        
+        return true;
+    }
+}

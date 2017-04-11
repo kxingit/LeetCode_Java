@@ -249,3 +249,48 @@ public class Solution {
         return res;
     }
 }
+
+// v6
+public class Solution {
+    // 9:57 - 10:03
+    HashSet<String> dict = new HashSet();
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        for(String w : wordList) dict.add(w);
+        Queue<String> q = new LinkedList();
+        q.add(beginWord);
+         
+        int len = 1;
+        while(q.size() > 0) {
+            int n = q.size();
+            len++;
+            for(int i = 0; i < n; i++) {
+                String w = q.poll();
+                List<String> nexts = getNexts(w);
+                for(String next : nexts) {
+                    if(next.equals(endWord)) {
+                        return len;
+                    }
+                    q.add(next);
+                }
+            }
+        }
+        return 0;
+    }
+     
+    public List<String> getNexts(String w) {
+        List<String> res = new ArrayList();
+        for(int i = 0; i < w.length(); i++) {
+            char[] chars = w.toCharArray();
+            for(char c = 'a'; c <= 'z'; c++) {
+                if(c == w.charAt(i)) continue;
+                chars[i] = c;
+                String next = new String(chars);
+                if(!dict.contains(next)) continue;
+                 
+                dict.remove(next);
+                res.add(new String(chars));
+            }
+        }
+        return res;
+    }
+}

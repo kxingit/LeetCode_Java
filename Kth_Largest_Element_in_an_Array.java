@@ -54,3 +54,18 @@ public class Solution {
         return pq.peek();
     }
 }
+
+// v4
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        // 3:13 - 3:15
+        PriorityQueue<Integer> pq = new PriorityQueue();
+        for(int i = 0; i < nums.length; i++) {
+            pq.add(nums[i]);
+            if(pq.size() > k) {
+                pq.poll();
+            }
+        }
+        return pq.peek();
+    }
+}
