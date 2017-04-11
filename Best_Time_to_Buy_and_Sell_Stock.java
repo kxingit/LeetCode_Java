@@ -30,3 +30,20 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // 9:05 - 9:07
+        int n = prices.length;
+        int currmin = Integer.MAX_VALUE;
+        int res = 0;
+        
+        for(int i = 0; i < n; i++) {
+            currmin = Math.min(currmin, prices[i]);
+            res = Math.max(res, prices[i] - currmin);
+        }
+        
+        return res;
+    }
+}

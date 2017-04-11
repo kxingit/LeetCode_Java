@@ -40,3 +40,40 @@ public class Solution {
         }
     }
 }
+
+// v2
+public class Solution {
+    String[] keyboard = new String[10];
+    public List<String> letterCombinations(String digits) {
+        // 9:43 - 9:53
+        keyboard[2] = "abc";
+        keyboard[3] = "def";
+        keyboard[4] = "ghi";
+        keyboard[5] = "jkl";
+        keyboard[6] = "mno";
+        keyboard[7] = "pqrs";
+        keyboard[8] = "tuv";
+        keyboard[9] = "wxyz";
+        
+        List<String> res = new ArrayList();
+        if(digits.length() == 0) return res;
+        StringBuffer solution = new StringBuffer();
+        dfs(digits, 0, solution, res);
+        
+        return res;
+    }
+    
+    public void dfs(String digits, int pos, StringBuffer solution, List<String> res) {
+        if(pos == digits.length()) {
+            res.add(solution.toString());
+            return;
+        }
+        int num = digits.charAt(pos) - '0';
+        String letters = keyboard[num];
+        for(int i = 0; i < letters.length(); i++) {
+            solution.append(letters.charAt(i));
+            dfs(digits, pos + 1, solution, res);
+            solution.setLength(solution.length() - 1);
+        }
+    }
+}

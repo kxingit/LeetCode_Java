@@ -15,3 +15,19 @@ public class Solution {
         return root;
     }
 }
+
+// v2
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 10:01 - 10:04
+        if(root == null) return root;
+        
+        if(p.val > root.val && q.val > root.val) {
+            return lowestCommonAncestor(root.right, p, q);
+        } else if (p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        } else {
+            return root;
+        }
+    }
+}

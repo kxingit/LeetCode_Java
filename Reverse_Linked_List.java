@@ -59,3 +59,19 @@ public class Solution {
         return p;
     }
 }
+
+// v5
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        // 9:56 - 9:58
+        ListNode newhead = null;
+        while(head != null) {
+            ListNode tmp = head.next;
+            head.next = newhead;
+            newhead = head;
+            head = tmp;
+        }
+        
+        return newhead;
+    }
+}

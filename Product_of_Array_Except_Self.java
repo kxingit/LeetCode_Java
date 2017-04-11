@@ -90,3 +90,79 @@ public class Solution {
         return prodright;
     }
 }
+
+// v4
+public class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        // 7:54 - 7:58
+        int n = nums.length;
+        int[] leftprod = new int[n];
+        int[] rightprod = new int[n];
+        
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                leftprod[i] = nums[0];
+            } else {
+                leftprod[i] = nums[i] * leftprod[i - 1];
+            }
+        }
+        
+        for(int i = n - 1; i >= 0; i--) {
+            if(i == n - 1) {
+                rightprod[i] = nums[i];
+            } else {
+                rightprod[i] = nums[i] * rightprod[i + 1];
+            }
+        }
+        
+        int[] res = new int[n];
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                res[i] = rightprod[i + 1];
+            } else if(i == n - 1) {
+                res[i] = leftprod[i - 1];
+            } else {
+                res[i] = leftprod[i - 1] * rightprod[i + 1];
+            }
+        }
+        
+        return res;
+    }
+}
+
+// v5
+public class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        // 7:58 - 8:08
+        int n = nums.length;
+        
+        int[] res = new int[n];
+        int leftprod = 1;
+        
+        for(int i = n - 1; i >= 0; i--) {
+            if(i == n - 1) {
+                res[i] = nums[i];
+            } else {
+                res[i] = nums[i] * res[i + 1];
+            }
+        }
+        
+        for(int i = 0; i < n; i++) {
+            if(i == 1) {
+                leftprod = nums[0];
+            } else if (i > 1) {
+                leftprod = nums[i - 1] * leftprod;
+            }
+            
+            if(i == 0) {
+                res[i] = res[i + 1];
+            } else if(i == n - 1) {
+                res[i] = leftprod;
+            } else {
+                res[i] = leftprod * res[i + 1];
+            }
+        }
+        
+        return res;
+    }
+}
