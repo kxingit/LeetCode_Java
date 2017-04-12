@@ -210,3 +210,81 @@ public class Solution {
         return s.substring(start, end);
     }
 }
+
+// v6
+public class Solution {
+    public String longestPalindrome(String s) {
+        // 11:23 - 11:27
+        int n = s.length();
+        String res = "";
+        for(int k = 0; k < n; k++) {
+            int i = k, j = k;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(j - i + 1 > res.length()) {
+                        res = s.substring(i, j + 1);
+                    }  
+                } else {
+                    break;
+                }
+                i--;
+                j++;
+            }
+             
+            i = k;
+            j = k + 1;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(j - i + 1 > res.length()) {
+                        res = s.substring(i, j + 1);
+                    }  
+                } else {
+                    break;
+                }
+                i--;
+                j++;
+            }
+        }
+        return res;
+    }
+}
+
+// v7
+public class Solution {
+    public String longestPalindrome(String s) {
+        // 9:25 - 9:28
+        int n = s.length();
+        int start = 0, end = 0;
+        for(int k = 0; k < n; k++) {
+            int i = k, j = k;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(end - start < j - i + 1) {
+                        start = i;
+                        end = j + 1;
+                    }
+                } else {
+                    break;
+                }
+                i--; j++;
+            }
+
+            i = k;
+            j = k + 1;
+            while(i >= 0 && j < n) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(end - start < j - i + 1) {
+                        start = i;
+                        end = j + 1;
+                    }
+                } else {
+                    break;
+                }
+                i--; j++;
+            }
+        }
+        return s.substring(start, end);
+    }
+}
+
+

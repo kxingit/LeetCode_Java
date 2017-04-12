@@ -71,3 +71,21 @@ public class Solution {
     }
 }
 
+
+// v7
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        // 11:32 - 11:40
+        Map<Integer, Integer> map = new HashMap();
+        map.put(0, 1);
+        for(int num : nums) {
+            Map<Integer, Integer> newmap = new HashMap();
+            for(Integer sum : map.keySet()) {
+                newmap.put(sum + num, newmap.getOrDefault(sum + num, 0) + map.get(sum)); // new[sum + num] = new[sum + num] + old[sum]
+                newmap.put(sum - num, newmap.getOrDefault(sum - num, 0) + map.get(sum));
+            }
+            map = newmap;
+        }
+        return map.getOrDefault(S, 0);
+    }
+}

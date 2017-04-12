@@ -268,3 +268,45 @@ public class Codec {
         return root;
     }
 }
+
+// v8
+public class Codec {
+    // 11:45 - 11:52
+    int i = 0;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        String res = "";
+        if(root == null) {
+            return "# ";
+        }
+        
+        res += root.val + " ";
+        res += serialize(root.left);
+        res += serialize(root.right);
+        
+        return res;
+    }
+ 
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data.length() == 0) {
+            return null;
+        }
+        String[] chars = data.split(" ");
+        return deserial(chars);
+    }
+    
+    public TreeNode deserial(String[] input) {
+        if(input[i].equals("#")) {
+            i++;
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(Integer.parseInt(input[i]));
+        i++;
+        root.left = deserial(input);
+        root.right = deserial(input);
+        
+        return root;
+    }
+}
