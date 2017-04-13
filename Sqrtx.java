@@ -19,3 +19,21 @@ public class Solution {
         else return start;
     }
 }
+
+// v2
+public class Solution {
+    public int mySqrt(int x) {
+        // 11:06 - 11:09
+        long start = 0, end = x;
+        while(start + 1 < end) {
+            long mid = start + (end - start) / 2;
+            if(mid * mid >= (long)x) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+        
+        return end * end <= x ? (int) end : (int) start; // last one
+    }
+}

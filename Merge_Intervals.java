@@ -48,3 +48,27 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        // 11:31 - 11:35
+        List<Interval> res = new ArrayList();
+        if(intervals.size() == 0) return res;
+        intervals.sort((a, b) -> a.start - b.start);
+        
+        res.add(intervals.get(0));
+        for(Interval in : intervals) {
+            Interval curr = res.get(res.size() - 1);
+            if(curr.end < in.start) {
+                res.add(in);
+            } else {
+                Interval newin = new Interval(curr.start, Math.max(curr.end, in.end));
+                res.remove(res.size() - 1);
+                res.add(newin);
+            }
+        }
+        
+        return res;
+    }
+}

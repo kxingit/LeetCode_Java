@@ -46,3 +46,23 @@ public class Solution {
         return res;
     }
 }
+
+// v3
+public class Solution {
+    public int maxSubArray(int[] nums) {
+        // 10:59 - 10:01
+        int n = nums.length;
+        int[] dp = new int[n];
+        
+        int res = Integer.MIN_VALUE;
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                dp[i] = nums[i];
+            } else {
+                dp[i] = Math.max(nums[i], nums[i] + dp[i - 1]);
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+}
