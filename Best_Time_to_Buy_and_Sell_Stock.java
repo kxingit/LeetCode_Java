@@ -47,3 +47,17 @@ public class Solution {
         return res;
     }
 }
+
+// v4
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // 11:44 - 11:45
+        int res = 0;
+        int currmin = Integer.MAX_VALUE;
+        for(int i = 0; i < prices.length; i++) {
+            currmin = Math.min(prices[i], currmin);
+            res = Math.max(res, prices[i] - currmin);
+        }
+        return res;
+    }
+}

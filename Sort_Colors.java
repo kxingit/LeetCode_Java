@@ -109,3 +109,24 @@ public class Solution {
         }
     }
 }
+
+// v6
+public class Solution {
+    public void sortColors(int[] nums) {
+        // 12:42 - 12:49
+        int l = 0, r = nums.length - 1;
+        // for(int i = 0; i < nums.length; i++) {
+        for(int i = 0; i <= r; i++) { // '<= r' !!!
+            if(nums[i] == 0) {
+                int tmp = nums[i];
+                nums[i] = nums[l];
+                nums[l++] = tmp;
+            } else if(nums[i] == 2) {
+                int tmp = nums[i];
+                nums[i] = nums[r];
+                nums[r--] = tmp;
+                i--;
+            }
+        }
+    }
+}

@@ -62,3 +62,30 @@ public class NestedIterator implements Iterator<Integer> {
         return stack.size() > 0;
     }
 }
+
+// v3
+public class NestedIterator implements Iterator<Integer> {
+    // 11:50 - 11:58  pay attention to the order!
+    List<NestedInteger> ni;
+    public NestedIterator(List<NestedInteger> nestedList) {
+        ni = nestedList;
+    }
+ 
+    @Override
+    public Integer next() {
+        Integer last = ni.get(0).getInteger();
+        ni.remove(0);
+        return last;
+    }
+ 
+    @Override
+    public boolean hasNext() {
+        while(ni.size() > 0 && !ni.get(0).isInteger()) {
+            List<NestedInteger> lastList = ni.get(0).getList();
+            ni.remove(0);
+            lastList.addAll(ni);
+            ni = lastList;
+        }
+        return ni.size() > 0;
+    }
+}

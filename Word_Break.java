@@ -171,3 +171,32 @@ public class Solution {
         return dp[m];
     }
 }
+
+// v8
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 12:06 - 12:10
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        // can use word in dict multiple times:
+        // for(String w : wordDict) {
+        //     for(int i = 0; i < n; i++) {
+        //         if(i + 1 >= w.length() && dp[i + 1 - w.length()]) {
+        //             if(!w.equals(s.substring(i + 1 - w.length(), i + 1))) continue;
+        //             dp[i + 1] = true;
+        //         }
+        //     }
+        // }
+        // can only use word in dict once:
+        for(int i = 0; i < n; i++) {
+            for(String w : wordDict) {
+                if(i + 1 >= w.length() && dp[i + 1 - w.length()]) {
+                    if(!w.equals(s.substring(i + 1 - w.length(), i + 1))) continue;
+                    dp[i + 1] = true;
+                }
+            }
+        }
+        return dp[n];
+    }
+}

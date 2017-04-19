@@ -199,3 +199,35 @@ public class BSTIterator {
         return res;
     }
 }
+
+// v7
+public class BSTIterator {
+    // 12:26 - 12:30
+    Stack<TreeNode> stack = new Stack();
+    TreeNode root;
+ 
+    public BSTIterator(TreeNode root) {
+        this.root = root;
+    }
+ 
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        while(root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+        return stack.size() > 0;
+    }
+ 
+    /** @return the next smallest number */
+    public int next() {
+        TreeNode root = stack.pop();
+        int res = root.val;
+        root = root.right;
+        while(root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+        return res;
+    }
+}

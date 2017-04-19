@@ -82,3 +82,26 @@ public class Solution {
         solution.remove(solution.size() - 1);
     }
 }
+
+// v5
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        // 1:48 - 1:52
+        List<List<Integer>> res = new ArrayList();
+        List<Integer> solution = new ArrayList();
+        dfs(nums, 0, solution, res);
+        return res;
+    }
+    
+    public void dfs(int[] nums, int pos, List<Integer> solution, List<List<Integer>> res) {
+        if(pos == nums.length) {
+            res.add(new ArrayList(solution));
+            return;
+        }
+        
+        dfs(nums, pos + 1, solution, res);
+        solution.add(nums[pos]);
+        dfs(nums, pos + 1, solution, res);
+        solution.remove(solution.size() - 1);
+    }
+}

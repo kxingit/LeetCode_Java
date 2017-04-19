@@ -73,3 +73,38 @@ public class Solution {
         return dp[target];
     }
 }
+
+// v5
+public class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        // 2:03 - 2:27
+        int n = nums.length, m = target;
+        // int[][] dp = new int[m + 1][n + 1];
+        // for(int j = 0; j <= n; j++) {
+        //     dp[0][j] = 1;
+        // }
+         
+        // for(int i = 1; i <= m; i++) {  
+        //     for(int j = 0; j < n; j++) {
+        //         dp[i][j + 1] += dp[i][j];
+        //         if(i - nums[j] >= 0) {
+        //             dp[i][j + 1] += dp[i - nums[j]][j];
+        //         }
+        //         System.out.print(dp[i][n]);
+        //     }
+        //     System.out.print(dp[i][n] + " ");
+        // }
+        // return dp[m][n];
+        int[] dp = new int[m + 1];
+        dp[0] = 1;
+         
+        for(int i = 1; i <= m; i++) {  
+            for(int j = 0; j < n; j++) {
+                if(i - nums[j] >= 0) {
+                    dp[i] += dp[i - nums[j]];
+                }
+            }
+        }
+        return dp[m];
+    }
+}
